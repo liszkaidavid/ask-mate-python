@@ -10,14 +10,16 @@ DATA_FILE_PATH = "sample_data/question.csv"
 
 def get_data_from_file():
     with open(DATA_FILE_PATH, "r") as csv_file:
-        dict_reader = csv.DictReader(csv_file)
-        headers = []
+        reader = csv.DictReader(csv_file)
+        header = []
         rows = []
-        for dictionary in dict_reader:
-            row = []
-            for key, val in dictionary.items():
-                if key not in headers:
-                    headers.append(key)
-                row.append(val)
-            rows.append(row)
-        return headers, rows
+        for row in reader:
+            rowdata = dict()
+            if not header:
+                for title in row:
+                    header.append(title)
+            for key, value in row.items():
+                rowdata[key] = value
+            rows.append(rowdata)
+        data = {"headers": header, "rows": rows}
+        return data

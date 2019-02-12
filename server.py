@@ -10,8 +10,9 @@ app = Flask(__name__)
 @app.route("/list")
 def home_page():
     kurvaanyad = connection.get_data_from_file()
-    print(kurvaanyad[0])
-    return render_template("list.html")
+    for title in kurvaanyad["headers"]:
+        print(title)
+    return render_template("list.html", a_jo=kurvaanyad)
 
 
 # Todo : route - /question/<question_id>

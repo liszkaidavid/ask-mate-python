@@ -5,7 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-<p>anyaaad</p>
+<table>
+    <tr>
+    {% for title in a_jo["headers"] %}
+    <th>{{title}}</th>
+    {% endfor %}
+    </tr>
+    {% for row in a_jo["rows"] %}
+    <tr>
 
+        {% for asd, element in row.items() %}
+            <td>{{element}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
 </body>
 </html>
