@@ -1,8 +1,8 @@
 import connection
 
 
-def read_to_dict():
-    reader = connection.get_data_from_file()
+def read_to_dict(path):
+    reader = connection.get_data_from_file(path)
     header = []
     rows = []
     for row in reader:
@@ -15,3 +15,8 @@ def read_to_dict():
         rows.append(rowdata)
     data = {"headers": header, "rows": rows}
     return data
+
+
+def prepare_data_to_write(path, form_data):
+    old_data = read_to_dict()
+    pass

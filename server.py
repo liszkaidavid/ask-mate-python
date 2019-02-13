@@ -9,7 +9,8 @@ app = Flask(__name__)
 @app.route('/')
 @app.route("/list")
 def home_page():
-    kurvaanyad = data_manager.read_to_dict()
+    placeholder_path = "sample_data/question.csv"
+    kurvaanyad = data_manager.read_to_dict(placeholder_path)
     for title in kurvaanyad["headers"]:
         print(title)
     return render_template("list.html", a_jo=kurvaanyad)
