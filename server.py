@@ -12,17 +12,25 @@ def home_page():
     placeholder_path = "sample_data/question.csv"
     kurvaanyad = data_manager.read_to_dict(placeholder_path)
     for title in kurvaanyad["headers"]:
-        print(title)
+        pass
     return render_template("list.html", a_jo=kurvaanyad)
 
 
 # Todo : route - /question/<question_id>
+@app.route("/question")
+def question_by_id():
+    pass
 
 
-# Todo : route - /add-question
+# Todo : route - /add-question #1
+@app.route("/add-question", methods=["POST", "GET"])
+def add_question():
+    if request.method == "POST":
+        data_manager.ad
+    return render_template("add-question.html")
 
 
-# Todo : route - /question/<question_id>
+# Todo : route - /question/<question_id>/new_answer
 
 
 # Todo : route - /list?order_by=title &order_direction=desc

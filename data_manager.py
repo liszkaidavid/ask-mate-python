@@ -20,3 +20,7 @@ def read_to_dict(path):
 def prepare_data_to_write(path, form_data):
     old_data = read_to_dict()
     pass
+
+
+def add_new_row(data):
+    connection.write_data_to_file(data)
