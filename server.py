@@ -33,12 +33,14 @@ def question_by_id():
 # Todo : route - /add-question #1 + image
 @app.route("/add-question", methods=["POST", "GET"])
 def add_question():
+    all = data_manager.read_to_dict(placeholder_path)
+    headers = all['headers']
     if request.method == "POST":
         data_manager.add_new_row()
-    return render_template("add-question.html")
+    return render_template("add-question.html", headers=headers)
 
 
-# Todo : route - /question/<question_id>/new_answer
+# Todo : route - /question/<question_id>/new_answer + image
 @app.route("/add-answer", methods=["POST", "GET"])
 def add_answer():
     if request.method == "POST":

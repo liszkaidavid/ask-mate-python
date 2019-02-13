@@ -5,8 +5,13 @@
     <title>Add question</title>
 </head>
 <body>
-<form action="/add-question" method="post">
-
+<form>
+    <label>{{headers[4]}} </label> <br>
+    <input type="text" required="True"> <br>
+    <label>{{headers[5]}}</label> <br>
+    <textarea required="True">write {{ headers[5] }} here</textarea> <br>
+    <label>submit</label> <br>
+    <input type="submit" name="ask question" required="True">
 </form>
 </body>
 </html>
