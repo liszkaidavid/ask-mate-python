@@ -70,7 +70,7 @@ def update_question():
     selected_data = data_manager.read_to_dict(placeholder_path)
     print(id)
     print(selected_data["rows"][id])
-    return render_template("edit.html")
+    return render_template("edit.html", updata=selected_data["rows"][id])
 
 
 # Todo : route - /question/<question_id>/delete

@@ -6,7 +6,9 @@
 </head>
 <body>
 <form>
-
+{% for key, vmi in updata.items() %}
+    <h3>{{key}}</h3><p>{{vmi}}</p>
+{% endfor %}
 </form>
 
 </body>
