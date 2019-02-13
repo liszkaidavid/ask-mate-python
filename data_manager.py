@@ -18,8 +18,8 @@ def read_to_dict(path):
 
 
 def prepare_data_to_write(path, form_data):
-    old_data = read_to_dict()
-    
+    old_data = read_to_dict(path)
+    # connection.write_data_to_file()
 
 
 def add_new_row(data):
