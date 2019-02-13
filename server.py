@@ -30,7 +30,7 @@ def question_by_id():
     return render_template("display-question.html", selected_data=selected_data, passable_list=passable_list)
 
 
-# Todo : route - /add-question #1
+# Todo : route - /add-question #1 + image
 @app.route("/add-question", methods=["POST", "GET"])
 def add_question():
     if request.method == "POST":
@@ -44,7 +44,6 @@ def add_answer():
     if request.method == "POST":
         data_manager.add_new_row()
     return render_template("add-answer.html")
-
 
 # Todo : route - /list?order_by=title &order_direction=desc
 @app.route("/list")
@@ -79,9 +78,19 @@ def delete_question():
     pass
 
 
+#todo delete answer
+@app.route('/answer/<answer_id>/delete')
+def delete_posts():
+    pass
+
+
+#todo vote answer
+@app.route('/question/<question_id>/vote-up')
+@app.route('/question/<question_id>/vote-down')
+def vote_for_answer():
+    pass
+
+
+
 if __name__ == '__main__':
-    app.run(
-        host='0.0.0.0',
-        port=8000,
-        debug=True,
-    )
+    app.run()
