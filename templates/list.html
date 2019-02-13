@@ -8,11 +8,11 @@
 <a href="/add-question">add question</a>
 <table>
     <tr>
-    {% for title in a_jo["headers"] %}
+    {% for title in db["headers"] %}
     <th>{{title}}</th>
     {% endfor %}
     </tr>
-    {% for row in a_jo["rows"] %}
+    {% for row in db["rows"] %}
     <tr>
 
         {% for asd, element in row.items() %}

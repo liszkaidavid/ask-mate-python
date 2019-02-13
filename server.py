@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
-import connection, data_manager
-# todo: lets seegvcxcbncbn,vc vvb
+import data_manager
+# todo: let's TODO!
 
 
 app = Flask(__name__)
@@ -10,10 +10,10 @@ app = Flask(__name__)
 @app.route("/list")
 def home_page():
     placeholder_path = "sample_data/question.csv"
-    kurvaanyad = data_manager.read_to_dict(placeholder_path)
-    for title in kurvaanyad["headers"]:
+    database = data_manager.read_to_dict(placeholder_path)
+    for title in database["headers"]:
         pass
-    return render_template("list.html", a_jo=kurvaanyad)
+    return render_template("list.html", db=database)
 
 
 # Todo : route - /question/<question_id>
@@ -26,7 +26,7 @@ def question_by_id():
 @app.route("/add-question", methods=["POST", "GET"])
 def add_question():
     if request.method == "POST":
-        data_manager.ad
+        data_manager.add_new_row()
     return render_template("add-question.html")
 
 
