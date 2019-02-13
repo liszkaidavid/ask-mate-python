@@ -5,6 +5,14 @@
     <title>Display question</title>
 </head>
 <body>
+{% for key, vmi in selected_data.items() %}
+    <h3>{{key}}</h3><p>{{vmi}}</p>
+{% endfor %}
+{% for elem in passable_list %}
+    {% for key, vmi in elem.items() %}
+    <h3>{{key}}</h3><p>{{vmi}}</p>
+    {% endfor %}
+{% endfor %}
 
 </body>
 </html>

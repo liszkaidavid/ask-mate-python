@@ -5,6 +5,8 @@ import data_manager
 
 app = Flask(__name__)
 
+placeholder_path = "sample_data/question.csv"
+answer_path = 'sample_data/answer.csv'
 
 @app.route('/')
 @app.route("/list")
@@ -20,7 +22,13 @@ def home_page():
 @app.route("/question/")
 def question_by_id():
     id = request.args.get('id', type=int)
-    return render_template("display-question.html")
+    answers = data_manager.read_to_dict(answer_path)
+    selected_data = data_manager.read_to_dict(placeholder_path)["rows"][id]
+    passable_list = []
+    for ans in answers["rows"]:
+        if ans["id"] == str(id):
+            passable_list.append(ans)
+    return render_template("display-question.html", selected_data=selected_data, passable_list=passable_list)
 
 
 # Todo : route - /add-question #1

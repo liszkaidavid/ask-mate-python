@@ -15,8 +15,8 @@ def get_data_from_file(path):
         return rows
 
 
-def write_data_to_file(path, data_to_write):
-    with open(path, "w") as csv_file:
+def write_data_to_file(path, data_to_write, mode):
+    with open(path, mode) as csv_file:
         writer = csv.DictWriter(csv_file)
         for row in data_to_write:
             writer.write(row)
