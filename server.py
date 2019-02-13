@@ -8,13 +8,12 @@ app = Flask(__name__)
 placeholder_path = "sample_data/question.csv"
 answer_path = 'sample_data/answer.csv'
 
+
 @app.route('/')
 @app.route("/list")
 def home_page():
     placeholder_path = "sample_data/question.csv"
     database = data_manager.read_to_dict(placeholder_path)
-    for title in database["headers"]:
-        pass
     return render_template("list.html", db=database)
 
 
@@ -46,6 +45,7 @@ def add_answer():
         data_manager.add_new_row()
     return render_template("add-answer.html")
 
+
 # Todo : route - /list?order_by=title &order_direction=desc
 @app.route("/list")
 def order_by_title():
@@ -57,12 +57,27 @@ def order_by_title():
 # Todo : route - /question/<question_id>/edit
 @app.route("/question/<question_id>/edit", methods=["POST", "GET"])
 def edit_question():
-    pass
+    if request.method == "post":
+        id = request.args.get('id', type=int)
+        print(id)
+        form_data = request.form
+        # data_manager.prepare_data_to_write(placeholder_path, form_data, "w")
+
+
+@app.route("/update/", methods=["POST", "GET"])
+def update_question():
+    id = request.args.get('id', type=int)
+    selected_data = data_manager.read_to_dict(placeholder_path)
+    print(id)
+    print(selected_data["rows"][id])
+    return render_template("edit.html")
+
 
 # Todo : route - /question/<question_id>/delete
 @app.route("/question/<question_id>/delete")
 def delete_question():
     pass
+
 
 if __name__ == '__main__':
     app.run(

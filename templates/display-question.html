@@ -5,6 +5,8 @@
     <title>Display question</title>
 </head>
 <body>
+<a href="/update/?id={{selected_data['id']}}">edit question</a>
+<br>
 {% for key, vmi in selected_data.items() %}
     <h3>{{key}}</h3><p>{{vmi}}</p>
 {% endfor %}
