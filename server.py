@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-import connection
+import connection, data_manager
 # todo: lets seegvcxcbncbn,vc vvb
 
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route("/list")
 def home_page():
-    kurvaanyad = connection.get_data_from_file()
+    kurvaanyad = data_manager.read_to_dict()
     for title in kurvaanyad["headers"]:
         print(title)
     return render_template("list.html", a_jo=kurvaanyad)
