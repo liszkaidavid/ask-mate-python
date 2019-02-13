@@ -11,15 +11,13 @@ app = Flask(__name__)
 def home_page():
     placeholder_path = "sample_data/question.csv"
     kurvaanyad = data_manager.read_to_dict(placeholder_path)
-    for title in kurvaanyad["headers"]:
-        pass
     return render_template("list.html", a_jo=kurvaanyad)
 
 
 # Todo : route - /question/<question_id>
-@app.route("/question")
+@app.route("/question/")
 def question_by_id():
-    pass
+    return render_template("display-question/{}.html")
 
 
 # Todo : route - /add-question #1
