@@ -77,10 +77,6 @@ def update_question():
 def delete_question():
     pass
 
-#todo add answer + image
-@app.route("/question/<question_id>/new-answer")
-def add_answer():
-    pass
 
 #todo delete answer
 @app.route('/answer/<answer_id>/delete')
