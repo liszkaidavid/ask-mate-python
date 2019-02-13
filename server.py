@@ -19,7 +19,8 @@ def home_page():
 # Todo : route - /question/<question_id>
 @app.route("/question/")
 def question_by_id():
-    return render_template("display-question/{}.html")
+    id = request.args.get('id', type=int)
+    return render_template("display-question.html")
 
 
 # Todo : route - /add-question #1
@@ -43,4 +44,6 @@ def add_question():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(
+        debug=True
+    )

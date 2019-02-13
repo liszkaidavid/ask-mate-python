@@ -17,9 +17,10 @@
 
         {% for key, element in row.items() %}
         {% if key == "title" %}
-            <td><a href="/question/{{row['id']}}">{{element}}</a></td>
-        {% endif %}
+            <td><a href="/question/?id={{row['id']}}">{{element}}</a></td>
+        {% else %}
             <td>{{element}}</td>
+        {% endif %}
         {% endfor %}
     </tr>
     {% endfor %}
