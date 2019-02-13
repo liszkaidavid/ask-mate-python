@@ -40,6 +40,16 @@ def add_question():
     return render_template("add-question.html", headers=headers)
 
 
+@app.route("/update/", methods=["POST", "GET"])
+def update_question():
+    if request.method == "POST":
+        data_manager.prepare_data_to_write(placeholder_path, request.form)
+        return redirect("/")
+    id = request.args.get('id', type=int)
+    selected_data = data_manager.read_to_dict(placeholder_path)
+    return render_template("edit.html", updata=selected_data["rows"][id], headers=selected_data["headers"])
+
+
 # Todo : route - /question/<question_id>/new_answer + image
 @app.route("/add-answer", methods=["POST", "GET"])
 def add_answer():
@@ -63,15 +73,6 @@ def edit_question():
         print(id)
         form_data = request.form
         # data_manager.prepare_data_to_write(placeholder_path, form_data, "w")
-
-
-@app.route("/update/", methods=["POST", "GET"])
-def update_question():
-    id = request.args.get('id', type=int)
-    selected_data = data_manager.read_to_dict(placeholder_path)
-    print(id)
-    print(selected_data["rows"][id])
-    return render_template("edit.html", updata=selected_data["rows"][id])
 
 
 # Todo : route - /question/<question_id>/delete

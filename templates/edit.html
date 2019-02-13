@@ -5,11 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-<form>
-{% for key, vmi in updata.items() %}
-    <label>{{key}}</label><p>{{vmi}}</p>
-{% endfor %}
+<!--<form>-->
+<!--{% for key, vmi in updata.items() %}-->
+    <!--<label>{{key}}</label><p>{{vmi}}</p>-->
+<!--{% endfor %}-->
+<!--</form>-->
+<form action="/update/" method="post" name="edit-question">
+    <input type="hidden" name="id" value="{{updata['id']}}">
+    <input type="hidden" name="submission_time" value="{{updata['submission_time']}}">
+    <input type="hidden" name="view_number" value="{{updata['view_number']}}">
+    <input type="hidden" name="vote_number" value="{{updata['vote_number']}}">
+    <input type="hidden" name="image" value="{{updata['image']}}">
+    <label>{{headers[4]}} </label> <br>
+    <input name="title" size="80" type="text" required="True" value="{{ updata['title']}}"> <br>
+    <label>{{headers[5]}}</label> <br>
+    <textarea name="message" required="True" rows="4" cols="50">{{ updata["message"]}}</textarea> <br>
+    <label>submit</label> <br>
+    <input type="submit" required="True">
 </form>
-
 </body>
 </html>
