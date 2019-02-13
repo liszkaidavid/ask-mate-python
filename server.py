@@ -40,18 +40,33 @@ def add_question():
 
 
 # Todo : route - /question/<question_id>/new_answer
-
+@app.route("/add-answer", methods=["POST", "GET"])
+def add_answer():
+    if request.method == "POST":
+        data_manager.add_new_row()
+    return render_template("add-answer.html")
 
 # Todo : route - /list?order_by=title &order_direction=desc
+@app.route("/list")
+def order_by_title():
+    order = request.args.get('order_by')
+    direction = request.args.get('direction')
+    return None
 
 
 # Todo : route - /question/<question_id>/edit
-
+@app.route("/question/<question_id>/edit", methods=["POST", "GET"])
+def edit_question():
+    pass
 
 # Todo : route - /question/<question_id>/delete
-
+@app.route("/question/<question_id>/delete")
+def delete_question():
+    pass
 
 if __name__ == '__main__':
     app.run(
-        debug=True
+        host='0.0.0.0',
+        port=8000,
+        debug=True,
     )
