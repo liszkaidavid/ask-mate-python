@@ -15,7 +15,10 @@
     {% for row in db["rows"] %}
     <tr>
 
-        {% for asd, element in row.items() %}
+        {% for key, element in row.items() %}
+        {% if key == "title" %}
+            <td><a href="/question/{{row['id']}}">{{element}}</a></td>
+        {% endif %}
             <td>{{element}}</td>
         {% endfor %}
     </tr>

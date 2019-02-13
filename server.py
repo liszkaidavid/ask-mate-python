@@ -17,9 +17,9 @@ def home_page():
 
 
 # Todo : route - /question/<question_id>
-@app.route("/question")
+@app.route("/question/")
 def question_by_id():
-    pass
+    return render_template("display-question/{}.html")
 
 
 # Todo : route - /add-question #1
