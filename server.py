@@ -26,7 +26,7 @@ def question_by_id():
     selected_data = data_manager.read_to_dict(placeholder_path)["rows"][id]
     passable_list = []
     for ans in answers["rows"]:
-        if ans["id"] == str(id):
+        if ans["question_id"] == str(id):
             passable_list.append(ans)
     return render_template("display-question.html", selected_data=selected_data, passable_list=passable_list)
 
