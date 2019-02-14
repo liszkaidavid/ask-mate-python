@@ -23,3 +23,4 @@ def write_data_to_file(path, data_to_write, mode):
             print(row)
             writer.writerow(row)
 
+
