@@ -30,5 +30,5 @@ def prepare_data_to_write(path, form_data):
     connection.write_data_to_file(path, old_data, "w")
 
 
-def add_new_row(path, data):
-    connection.write_data_to_file(path, data, mode='a')
+def add_new_row(path, data, headers):
+    connection.append_row(path, data,headers)
