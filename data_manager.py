@@ -1,7 +1,6 @@
 import connection
 import util
 
-
 def read_to_dict(path):
     reader = connection.get_data_from_file(path)
     header = []
@@ -31,5 +30,5 @@ def prepare_data_to_write(path, form_data):
     connection.write_data_to_file(path, old_data, "w")
 
 
-def add_new_row(data):
-    connection.write_data_to_file(data, mode='a')
+def add_new_row(path, data):
+    connection.write_data_to_file(path, data, mode='a')

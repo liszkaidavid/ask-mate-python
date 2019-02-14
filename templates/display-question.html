@@ -16,26 +16,31 @@
       <a class="navbar-brand" href="/">Ask Mate by KEDD</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/">Home</a></li>
+      <li class="active"><a href="/question/">Display Question</a></li>
+        <li><a href="/">Home</a></li>
       <li><a href="/update/?id={{selected_data['id']}}">Edit Question</a></li>
     </ul>
   </div>
 </nav>
 
 <div class="container">
+    <h2>Question</h2>
 <table class="table">
-    <thead>
         {% for key, answer in selected_data.items() %}
         <tr><th>{{key}}</th><td>{{answer}}</td>
+            {% if key == "id"%}
+            <a href="/vote-up" class="btn btn-info" role="button">Vote Up</a>
+            <a href="/vote-down" class="btn btn-info" role="button">Vote Down</a>
+            {% endif%}
             {% endfor %}</tr>
-        {% for elem in passable_list %}
+</table>
+    <h2>Answers</h2>
+    <table class="table">
+            {% for elem in passable_list %}
             {% for key, answer in elem.items() %}
         <tr><th>{{key}}</th><td>{{answer}}</td>
             {% endfor %}
-            {% endfor %}</tr>
-    </thead>
-</table>
+            {% endfor %}</tr></table>
 </div>
-
 </body>
 </html>

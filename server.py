@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-import data_manager
+import data_manager, util
 # todo: let's TODO!
 
 
@@ -36,7 +36,19 @@ def add_question():
     all = data_manager.read_to_dict(placeholder_path)
     headers = all['headers']
     if request.method == "POST":
-        data_manager.add_new_row()
+        last_id = data_manager.read_to_dict(placeholder_path)['rows'][-1]['id']
+        id = int(last_id) + 1
+        submission_time = util.make_timestamp()
+        title  = request.form['title']
+        message = request.form['message']
+        view_number, vote_number = 0, 0
+        image = ''
+        data = {}
+        form_list = [id, submission_time, view_number, vote_number,title, message, image]
+        for elem in range(len(headers)):
+            data[headers[elem]] = form_list[elem]
+        data_manager.add_new_row(placeholder_path, data)
+        return redirect('/list')
     return render_template("add-question.html", headers=headers)
 
 
@@ -90,9 +102,11 @@ def delete_posts():
 #todo vote answer
 @app.route('/question/<question_id>/vote-up')
 @app.route('/question/<question_id>/vote-down')
+@app.route('/vote')
 def vote_for_answer():
-    pass
-
+    vote_data = data_manager.read_to_dict(answer_path)
+    print(vote_data["rows"][0]['vote_number'])
+    return redirect("/list")
 
 
 if __name__ == '__main__':
