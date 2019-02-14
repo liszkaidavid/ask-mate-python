@@ -1,4 +1,5 @@
 import connection
+import util
 
 
 def read_to_dict(path):
@@ -21,8 +22,13 @@ def prepare_data_to_write(path, form_data):
     old_data = read_to_dict(path)
     for i, row in enumerate(old_data['rows']):
         if row["id"] == form_data["id"]:
-            old_data["rows"][i] = form_data
-    connection.write_data_to_file(path, old_data["rows"], "w")
+            for key, value in form_data.items():
+                if key == "submission_time":
+                    old_data["rows"][i][key] = util.make_timestamp()
+                    continue
+                old_data["rows"][i][key] = value
+
+    connection.write_data_to_file(path, old_data, "w")
 
 
 def add_new_row(data):

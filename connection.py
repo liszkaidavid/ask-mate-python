@@ -16,11 +16,9 @@ def get_data_from_file(path):
 
 
 def write_data_to_file(path, data_to_write, mode):
-    for row in data_to_write:
-        print(row)
-    # with open(path, mode) as csv_file:
-    #     writer = csv.DictWriter(csv_file)
-    #     print("ide is eljut")
-    #     for row in data_to_write:
-    #         print(row)
-            # writer.write(row)
+    with open(path, mode) as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=data_to_write["headers"])
+        writer.writeheader()
+        for row in data_to_write["rows"]:
+            print(row)
+            writer.writerow(row)
