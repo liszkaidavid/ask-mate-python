@@ -24,3 +24,8 @@ def write_data_to_file(path, data_to_write, mode):
             writer.writerow(row)
 
 
+def append_row(path, data, headers):
+    with open(path, mode='a') as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=headers)
+        writer.writerow(data)
+

@@ -14,6 +14,10 @@ answer_path = 'sample_data/answer.csv'
 def home_page():
     placeholder_path = "sample_data/question.csv"
     database = data_manager.read_to_dict(placeholder_path)
+    for elem in database['rows']:
+        submission_time = elem['submission_time']
+        submission_time = util.make_timestamp_readable(int(submission_time))
+        elem['submission_time'] = submission_time
     return render_template("list.html", db=database)
 
 
@@ -47,7 +51,7 @@ def add_question():
         form_list = [id, submission_time, view_number, vote_number,title, message, image]
         for elem in range(len(headers)):
             data[headers[elem]] = form_list[elem]
-        data_manager.add_new_row(placeholder_path, data)
+        data_manager.add_new_row(placeholder_path, data, headers)
         return redirect('/list')
     return render_template("add-question.html", headers=headers)
 
