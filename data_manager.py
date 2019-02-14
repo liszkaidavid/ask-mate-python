@@ -21,10 +21,8 @@ def prepare_data_to_write(path, form_data):
     old_data = read_to_dict(path)
     for i, row in enumerate(old_data['rows']):
         if row["id"] == form_data["id"]:
-            print("BEME")
             old_data["rows"][i] = form_data
-    print(old_data["rows"])
-    # connection.write_data_to_file()
+    connection.write_data_to_file(path, old_data["rows"], "w")
 
 
 def add_new_row(data):
