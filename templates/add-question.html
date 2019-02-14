@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Add question</title>
+  <title>Add Question</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <h2>Add Question</h2>
 <form action="/add-question" method="post" name="add question">
+    <div class="form-group">
     <label for="title">{{headers[4]}} </label> <br>
-    <input name="title" id="title" type="text" required="True"> <br>
+    <input class="form-control" name="title" id="title" type="text" required="True"> <br>
     <label for="message">{{headers[5]}}</label> <br>
-    <textarea name="message" id="message" required="True">write {{ headers[5] }} here</textarea> <br>
-    <label>submit</label> <br>
-    <input type="submit" name="ask question" required="True">
+    <textarea class="form-control" name="message" id="message" required="True">write {{ headers[5] }} here</textarea> <br>
+        <button type="submit" class="btn" name="ask question" required="True">Submit</button>
 </form>
+    </div>
 </body>
 </html>
+
