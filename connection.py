@@ -20,7 +20,6 @@ def write_data_to_file(path, data_to_write, mode):
         writer = csv.DictWriter(csv_file, fieldnames=data_to_write["headers"])
         writer.writeheader()
         for row in data_to_write["rows"]:
-            print(row)
             writer.writerow(row)
 
 
