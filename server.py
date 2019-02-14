@@ -90,9 +90,11 @@ def delete_posts():
 #todo vote answer
 @app.route('/question/<question_id>/vote-up')
 @app.route('/question/<question_id>/vote-down')
+@app.route('/vote')
 def vote_for_answer():
-    pass
-
+    vote_data = data_manager.read_to_dict(answer_path)
+    print(vote_data["rows"][0]['vote_number'])
+    return redirect("/list")
 
 
 if __name__ == '__main__':
