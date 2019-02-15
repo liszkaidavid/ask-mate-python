@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <title>Edit Question</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <!--<form>-->
@@ -10,17 +14,20 @@
     <!--<label>{{key}}</label><p>{{vmi}}</p>-->
 <!--{% endfor %}-->
 <!--</form>-->
+<div class="container">
+    <h2>Edit Question</h2>
 <form action="/update/" method="post" name="edit-question">
+    <div class="form-group">
     <input type="hidden" name="id" value="{{updata['id']}}">
     <input type="hidden" name="submission_time" value="{{updata['submission_time']}}">
     <input type="hidden" name="view_number" value="{{updata['view_number']}}">
     <input type="hidden" name="vote_number" value="{{updata['vote_number']}}">
     <input type="hidden" name="image" value="{{updata['image']}}">
     <label>{{headers[4]}} </label> <br>
-    <input name="title" size="80" type="text" required="True" value="{{ updata['title']}}"> <br>
+    <input class="form-control" name="title" size="80" type="text" required="True" value="{{ updata['title']}}"> <br>
     <label>{{headers[5]}}</label> <br>
-    <textarea name="message" required="True" rows="4" cols="50">{{ updata["message"]}}</textarea> <br>
-    <input type="submit" required="True">
+    <textarea class="form-control" name="message" required="True" rows="4" cols="50">{{ updata["message"]}}</textarea> <br>
+    <input type="submit" class="btn" required="True">
 </form>
 </body>
 </html>
