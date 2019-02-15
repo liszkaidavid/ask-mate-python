@@ -32,12 +32,14 @@
         </tr>
         {% for row in db["rows"] %}
         <tr>
+            {% set counter = 0 %}
             {% for key, element in row.items() %}
             {% if key == "title" %}
-                <td><a href="/question/?id={{row['id']}}">{{element}}</a></td>
+                <td><a href={{ url_for('questions', question_id=question_id[counter]) }}>{{element}}</a></td>
             {% else %}
                 <td>{{element}}</td>
             {% endif %}
+            {% set counter = counter + 1 %}
             {% endfor %}
         </tr>
         {% endfor %}

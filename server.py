@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 import data_manager, util
-# todo: let's TODO!
 
 
 app = Flask(__name__)
@@ -14,15 +13,17 @@ answer_path = 'sample_data/answer.csv'
 def home_page():
     placeholder_path = "sample_data/question.csv"
     database = data_manager.read_to_dict(placeholder_path)
+    question_id = []
     for elem in database['rows']:
         submission_time = elem['submission_time']
         submission_time = util.make_timestamp_readable(int(submission_time))
         elem['submission_time'] = submission_time
-    return render_template("list.html", db=database)
+        question_id.append(elem['id'])
+    return render_template("list.html", db=database, question_id=question_id)
 
 
 # Todo : route - /question/<question_id>
-@app.route("/question/")
+@app.route("/question/<question_id>")
 def question_by_id():
     id = request.args.get('id', type=int)
     answers = data_manager.read_to_dict(answer_path)
@@ -31,16 +32,18 @@ def question_by_id():
     for ans in answers["rows"]:
         if ans["question_id"] == str(id):
             passable_list.append(ans)
-    return render_template("display-question.html", selected_data=selected_data, passable_list=passable_list)
+    question_id =url_for(ans['question_id'])
+    return render_template("display-question.html", selected_data=selected_data,
+            passable_list=passable_list, question_id=question_id)
 
 
-# Todo : route - /add-question #1 + image
+# Todo : refactor + image
 @app.route("/add-question", methods=["POST", "GET"])
 def add_question():
-    all = data_manager.read_to_dict(placeholder_path)
+    all = data_manager.read_to_dict(answer_path)
     headers = all['headers']
     if request.method == "POST":
-        last_id = data_manager.read_to_dict(placeholder_path)['rows'][-1]['id']
+        last_id = data_manager.read_to_dict(answer_path)['rows'][-1]['id']
         id = int(last_id) + 1
         submission_time = util.make_timestamp()
         title  = request.form['title']
@@ -51,7 +54,7 @@ def add_question():
         form_list = [id, submission_time, view_number, vote_number,title, message, image]
         for elem in range(len(headers)):
             data[headers[elem]] = form_list[elem]
-        data_manager.add_new_row(placeholder_path, data, headers)
+        data_manager.add_new_row(answer_path, data, headers)
         return redirect('/list')
     return render_template("add-question.html", headers=headers)
 
@@ -67,11 +70,25 @@ def update_question():
 
 
 # Todo : route - /question/<question_id>/new_answer + image
-@app.route("/add-answer", methods=["POST", "GET"])
-def add_answer():
+@app.route("/question/<question_id>/add-answer", methods=["POST", "GET"])
+def add_answer(question_id):
+    all = data_manager.read_to_dict(answer_path)
+    headers = all['headers']
+
     if request.method == "POST":
-        data_manager.add_new_row()
-    return render_template("add-answer.html")
+        last_id = data_manager.read_to_dict(placeholder_path)['rows'][-1]['id']
+        id = int(last_id) + 1
+        submission_time = util.make_timestamp()
+        title = request.form['title']
+        message = request.form['message']
+        view_number, vote_number = 0, 0
+        image = ''
+        data = {}
+        form_list = [id, submission_time, view_number, vote_number, title, message, image]
+        for elem in range(len(headers)):
+            data[headers[elem]] = form_list[elem]
+        print(data)
+    return render_template("add-answer.html", headers=headers)
 
 # Todo : route - /list?order_by=title &order_direction=desc
 @app.route("/list")

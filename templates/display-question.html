@@ -16,7 +16,7 @@
       <a class="navbar-brand" href="/">Ask Mate by KEDD</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/question/">Display Question</a></li>
+      <li class="active"><a href="/question/<question_id>">Display Question</a></li>
         <li><a href="/">Home</a></li>
       <li><a href="/update/?id={{selected_data['id']}}">Edit Question</a></li>
     </ul>
@@ -35,6 +35,7 @@
             {% endfor %}</tr>
 </table>
     <h2>Answers</h2>
+    <h3><a href="add-answer.html">Add answer</a></h3>
     <table class="table">
             {% for elem in passable_list %}
             {% for key, answer in elem.items() %}

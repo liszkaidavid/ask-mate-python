@@ -5,6 +5,13 @@
     <title>Add Answer</title>
 </head>
 <body>
-
+<form action="/add-answer" method="post" name="add answer">
+    <label for="title">{{headers[4]}} </label> <br>
+    <input name="title" id="title" type="text" required="True"> <br>
+    <label for="message">{{headers[5]}}</label> <br>
+    <textarea name="message" id="message" required="True">write {{ headers[5] }} here</textarea> <br>
+    <label>submit</label> <br>
+    <input type="submit" name="add answer" required="True">
+</form>
 </body>
 </html>
