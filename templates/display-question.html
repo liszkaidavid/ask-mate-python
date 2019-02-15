@@ -29,8 +29,6 @@
         {% for key, answer in selected_data.items() %}
         <tr><th>{{key}}</th><td>{{answer}}</td>
             {% if key == "id"%}
-            <a href="/vote-up" class="btn btn-info" role="button">Vote Up</a>
-            <a href="/vote-down" class="btn btn-info" role="button">Vote Down</a>
             {% endif%}
             {% endfor %}</tr>
 </table>
