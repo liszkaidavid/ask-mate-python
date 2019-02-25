@@ -1,6 +1,7 @@
 import connection
 import util
 
+
 def read_to_dict(path):
     reader = connection.get_data_from_file(path)
     header = []
