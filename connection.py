@@ -1,30 +1,44 @@
-import csv
-# todo : read question csv file
-# todo : write question csv file
+import os
+import psycopg2
+import psycopg2.extras
 
-# todo : read answer csv file
-# todo : write answer csv file
+def get_connection_string():
+    user_name = os.environ.get('PSQL_USER_NAME')
+    password = os.environ.get('PSQL_PASSWORD')
+    host = os.environ.get('PSQL_HOST')
+    database_name = os.environ.get('PSQL_DB_NAME')
 
-DATA_FILE_PATH = "sample_data/question.csv"
+    env_variables_defined = user_name and password and host and database_name
 
-
-def get_data_from_file(path):
-    with open(path, "r") as csv_file:
-        reader = csv.DictReader(csv_file)
-        rows = [row for row in reader]
-        return rows
-
-
-def write_data_to_file(path, data_to_write, mode):
-    with open(path, mode) as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=data_to_write["headers"])
-        writer.writeheader()
-        for row in data_to_write["rows"]:
-            writer.writerow(row)
+    if env_variables_defined:
+        return 'postgresql://{user_name}:{password}@{host}/{database_name}'.format(
+            user_name=user_name,
+            password=password,
+            host=host,
+            database_name=database_name
+        )
+    else:
+        raise KeyError('Some necessary environment variable(s) are not defined')
 
 
-def append_row(path, data, headers):
-    with open(path, mode='a') as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=headers)
-        writer.writerow(data)
+def open_database():
+    try:
+        connection_string = get_connection_string()
+        connection = psycopg2.connect(connection_string)
+        connection.autocommit = True
+    except psycopg2.DatabaseError as exception:
+        print('Database connection problem')
+        raise exception
+    return connection
 
+
+def connection_handler(function):
+    def wrapper(*args, **kwargs):
+        connection = open_database()
+        dict_cur = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        ret_value = function(dict_cur, *args, **kwargs)
+        dict_cur.close()
+        connection.close()
+        return ret_value
+
+    return wrapper
