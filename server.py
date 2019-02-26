@@ -1,18 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for
-import data_manager, util
+import data_manager
+import util
 
 app = Flask(__name__)
 
 
 @app.route('/')
+@app.route('/list')
 def home_page():
-    return render_template("index.html")
+    return render_template("list.html")
 
 
 @app.route("/experimental")
 def experiment():
-    sql_data = data_manager.get_data()
-    return render_template("experimental.html", data=sql_data)
+    table_titles = data_manager.get_title_names("question")[0]._column_mapping
+    table_data = data_manager.get_data()
+    print(table_data)
+    return render_template("experimental.html", table_titles=table_titles, table_datas=table_data)
 
 #     database = data_manager.read_to_dict(placeholder_path)
 #     for elem in database['rows']:
