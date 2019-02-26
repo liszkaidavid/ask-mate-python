@@ -13,9 +13,8 @@ def home_page():
 
 @app.route("/experimental")
 def experiment():
-    table_titles = data_manager.get_title_names("question")[0]._column_mapping
+    table_titles = [title["column_name"] for title in data_manager.get_title_names('question')]
     table_data = data_manager.get_data()
-    print(table_data)
     return render_template("experimental.html", table_titles=table_titles, table_datas=table_data)
 
 #     database = data_manager.read_to_dict(placeholder_path)

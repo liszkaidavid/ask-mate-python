@@ -3,12 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>Application process</title>
-        <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">-->
-        {% include "navbar.html" %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
     </head>
     <body>
-    <div>
+    <div class="container">
+        {% include "navbar.html" %}
+        <div>
         {% block content %} {% endblock %}
+        </div>
     </div>
     </body>
 </html>
