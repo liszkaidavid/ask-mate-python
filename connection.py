@@ -2,6 +2,7 @@ import os
 import psycopg2
 import psycopg2.extras
 
+
 def get_connection_string():
     user_name = os.environ.get('PSQL_USER_NAME')
     password = os.environ.get('PSQL_PASSWORD')

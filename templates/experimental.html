@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<table>
+    <tr>
+        {% for title in table_titles %}
+            <th>{{ title }}</th>
+        {% endfor %}
+    </tr>
+        {% for data in table_datas %}
+        {% for data in table_datas %}
+    <tr>
+        {% for title, value in data.items() %}
+            <td> {{ value }} </td>
+        {% endfor %}
+    </tr>
+        {% endfor %}
+        {% endfor %}
+</table>
+
+{% endblock %}
