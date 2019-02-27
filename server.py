@@ -8,6 +8,11 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def home_page():
+    table_titles = [title["column_name"] for title in data_manager.get_title_names('question')]
+    data = data_manager.get_data()[0]
+    this = [value for key,value in data.items()]
+    print(this)
+    data_manager.insert_to_table(table_titles, this)
     return render_template("list.html")
 
 
