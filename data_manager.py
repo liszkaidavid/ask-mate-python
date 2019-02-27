@@ -11,6 +11,18 @@ def get_data(cursor):
 
 
 @connection.connection_handler
+def get_limited_questions(cursor):
+    cursor.execute("""
+                        SELECT * FROM question LIMIT '5';
+        """)
+    requested_info = cursor.fetchall()
+
+    print(requested_info)
+
+    return requested_info
+
+
+@connection.connection_handler
 def get_title_names(cursor, table):
     table_query = f"SELECT column_name FROM information_schema.columns WHERE table_name='{table}'"
     cursor.execute(table_query)
