@@ -16,9 +16,6 @@ def get_limited_questions(cursor):
                         SELECT * FROM question LIMIT '5';
         """)
     requested_info = cursor.fetchall()
-
-    print(requested_info)
-
     return requested_info
 
 
