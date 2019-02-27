@@ -19,6 +19,11 @@ def experiment():
     table_data = data_manager.get_data()
     return render_template("experimental.html", table_titles=table_titles, table_datas=table_data)
 
+
+@app.route("/display-question/<id>")
+def display_question():
+    return render_template("display-question.html")
+
 #     database = data_manager.read_to_dict(placeholder_path)
 #     for elem in database['rows']:
 #         submission_time = elem['submission_time']
