@@ -11,7 +11,11 @@
         {% for data in table_datas %}
     <tr>
         {% for title, value in data.items()  %}
+            {% if title == "title" %}
+        <td><a href="{{ url_for('display_question', id=data['id']) }}">{{ value }}</a></td>
+            {% else %}
             <td> {{ value }} </td>
+            {% endif %}
         {% endfor %}
     </tr>
         {% endfor %}
