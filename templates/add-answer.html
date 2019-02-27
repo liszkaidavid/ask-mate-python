@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Answer</title>
-</head>
-<body>
+{% extends "layout.html" %}
 
-</body>
-</html>
+{% block content %}
+
+
+<form action="/add-question" method="post" name="add question">
+    <div class="form-group">
+    <label for="title">{{headers[4]}} </label> <br>
+    <input class="form-control" name="title" id="title" type="text" required="True"> <br>
+    <label for="message">{{headers[5]}}</label> <br>
+    <textarea class="form-control" name="message" id="message" required="True">write {{ headers[5] }} here</textarea> <br>
+        <button type="submit" class="btn" name="ask question" required="True">Submit</button>
+    </div>
+</form>
+
+
+
+{% end block %}
