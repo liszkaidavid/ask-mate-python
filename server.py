@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/list')
 def home_page():
     table_titles = [title["column_name"] for title in data_manager.get_title_names('question')]
-    datas = data_manager.get_data()
+    datas = data_manager.get_limited_questions()
     print(datas)
     return render_template("list.html", table_titles=table_titles, table_datas=datas)
 
