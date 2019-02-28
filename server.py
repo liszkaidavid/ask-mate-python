@@ -14,9 +14,9 @@ def home_page():
 
 @app.route("/list")
 def list():
-    table_titles =util.get_table_titles()
+    table_titles = util.get_table_titles()
     table_data = data_manager.get_data()
-    return render_template("experimental.html", table_titles=table_titles, table_datas=table_data)
+    return render_template("list.html", table_titles=table_titles, table_datas=table_data)
 
 
 @app.route("/display-question/<question_id>")
@@ -39,7 +39,9 @@ def display(type, id):
         answers = data_manager.get_answers()
         return render_template("display-answer.html", selected_data=selected_data, passable_list=answers)
     elif type == "comment":
-        pass
+        selected_data = table_data[int(id)]
+        answers = data_manager.get_answers()
+        return render_template("display-comment.html", selected_data=selected_data, passable_list=answers)
     return redirect('/')
 
 
