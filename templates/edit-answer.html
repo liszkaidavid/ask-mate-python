@@ -2,8 +2,7 @@
 
 {% block content %}
 
-<div class="container">
-    <h2>Edit Question</h2>
+<h2>Edit Question</h2>
 <form action="{{url_for('edit', type='answer', id=answer_id)}}" method="post" name="edit-answer">
     <div class="form-group">
     <input type="hidden" name="id" value="{{updata['id']}}">
@@ -16,6 +15,7 @@
     <label>{{headers[5]}}</label> <br>
     <textarea class="form-control" name="message" required="True" rows="4" cols="50">{{ updata["message"]}}</textarea> <br>
     <input type="submit" class="btn" required="True">
+    </div>
 </form>
 
-    {% endblock %}
+{% endblock %}

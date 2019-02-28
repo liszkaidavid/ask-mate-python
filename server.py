@@ -45,8 +45,6 @@ def display(type, id):
     return redirect('/')
 
 
-
-
 @app.route("/add/<type>/<id>", methods=["POST", "GET"])
 def add(type, id):
     if type == "question":
@@ -61,7 +59,7 @@ def add(type, id):
         if request.method == 'POST':
             return redirect('/')
         return render_template('add-comment.html')
-    return redirect('/')
+
 
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
 def edit(type, id):
