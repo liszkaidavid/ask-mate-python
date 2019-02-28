@@ -7,21 +7,53 @@ app = Flask(__name__)
 
 @app.route('/')
 def home_page():
-    table_titles = [title["column_name"] for title in data_manager.get_title_names('question')]
+    table_titles = util.get_table_titles()
     datas = data_manager.get_limited_questions()
     return render_template("list.html", table_titles=table_titles, table_datas=datas)
 
 
 @app.route("/list")
 def list():
-    table_titles = [title["column_name"] for title in data_manager.get_title_names('question')]
+    table_titles =util.get_table_titles()
     table_data = data_manager.get_data()
     return render_template("experimental.html", table_titles=table_titles, table_datas=table_data)
 
 
 @app.route("/display-question/<id>")
-def display_question():
-    return render_template("display-question.html")
+def display_question(id):
+    table_data = data_manager.get_data()
+    selected_data = table_data[int(id)]
+    answers = data_manager.get_answers()
+    return render_template("display-question.html", selected_data=selected_data, passable_list=answers)
+
+
+@app.route("/display-question/<id>/edit")
+def edit_question():
+    pass
+
+
+@app.route("/display-answer/<id>")
+def display_answer():
+    pass
+
+
+@app.route("/display-question/<id>/add-answer")
+def add_answer():
+    pass
+
+
+#@app.route("/display-question/<id</add-comment", "/display-answer/<id>/add-comment")
+def add_comment():
+    pass
+
+
+#@app.route("/display-question/<id</add-comment/<comment_id>/edit-comment", "/display-answer/<id>/add-comment/<comment_id>/edit-comment")
+def edit_comment():
+    pass
+
+#@app.route("/display-question/<id</add-comment/<comment_id>", "/display-answer/<id>/add-comment/<comment_id>")
+def delete_comment():
+    pass
 
 #     database = data_manager.read_to_dict(placeholder_path)
 #     for elem in database['rows']:

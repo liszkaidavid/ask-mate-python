@@ -9,6 +9,14 @@ def get_data(cursor):
     requested_info = cursor.fetchall()
     return requested_info
 
+@connection.connection_handler
+def get_answers(cursor):
+    cursor.execute("""
+                            SELECT * FROM answer
+            """)
+    requested_info = cursor.fetchall()
+    return requested_info
+
 
 @connection.connection_handler
 def get_limited_questions(cursor):
