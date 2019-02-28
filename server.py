@@ -14,9 +14,9 @@ def home_page():
 
 @app.route("/list")
 def list():
-    table_titles =util.get_table_titles()
+    table_titles = util.get_table_titles()
     table_data = data_manager.get_data()
-    return render_template("experimental.html", table_titles=table_titles, table_datas=table_data)
+    return render_template("list.html", table_titles=table_titles, table_datas=table_data)
 
 
 @app.route("/display-question/<question_id>")
@@ -43,8 +43,6 @@ def display(type, id):
     return redirect('/')
 
 
-
-
 @app.route("/add/<type>/<id>", methods=["POST", "GET"])
 def add(type, id):
     if type == "question":
@@ -59,7 +57,7 @@ def add(type, id):
         if request.method == 'POST':
             return redirect('/')
         return render_template('add-comment.html')
-    return redirect('/')
+
 
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
 def edit(type, id):
