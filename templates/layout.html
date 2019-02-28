@@ -6,12 +6,10 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
     </head>
     <body>
-    <div class="container-fluid text-center">
+    <div class="container-fluid">
         {% include "navbar.html" %}
-        <div>
         {% block content %} {% endblock %}
-        </div>
-    </div>
+     </div>
     </body>
 </html>
 

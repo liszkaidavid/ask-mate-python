@@ -1,20 +1,80 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="container">
+<div class="container text-center" style="padding-top:25px;">
 
-<table>
-<tr>
-    {% for title in  table_title if title not in exceptions %}
-        <th>{{ title.capitalize() }}</th>
+    <h2>Question</h2>
+    <hr>
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      <h3>{{ selected_data.title }}</h3>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      {{ selected_data.message }}
+    </div>
+  </div>
+    <br>
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      {{ selected_data.submission_time }}
+    </div>
+      <div class="col-md-auto">
+      {{ selected_data.vote_number }}
+    </div>
+      <div class="col-md-auto">
+      {{ selected_data.view_number }}
+    </div>
+    <div class="col-md-auto">
+      <a href="{{ url_for('edit', type='question', id=question_id) }}">edit question</a>
+    </div>
+  </div>
+
+    <h4 style="padding-top: 25px;">Answers</h4>
+    <hr>
+    {% if not passable_list %}
+        <h3>No answers given yet</h3>
+    {% else %}
+    {% for answer in passable_list %}
+
+      <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+          <h3>{{ answer.title }}</h3>
+        </div>
+      </div>
+      <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+          {{ answer.message }}
+        </div>
+      </div>
+        {% if not answer.image %}
+        {% else %}
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+              {{ answer.image }}
+            </div>
+         </div>
+        {% endif %}
+        <br>
+      <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+          {{ answer.submission_time }}
+        </div>
+          <div class="col-md-auto">
+          {{ answer.vote_number }}
+        </div>
+          <div class="col-md-auto">
+          {{ answer.view_number }}
+        </div>
+        <div class="col-md-auto">
+          <a href="{{ url_for('edit', type='answer', id=id) }}">edit answer</a>
+        </div>
+      </div>
+        <hr>
+    {% endif %}
     {% endfor %}
-</tr>
-<tr>
-    {% for title, value in selected_data.items() if title not in exceptions %}
-    <td>{{ value }}</td>
-    {% endfor %}
-</tr>
-</table>
 
 </div>
+
 {% endblock %}

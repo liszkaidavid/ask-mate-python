@@ -40,8 +40,7 @@ def display(type, id):
     if type == "question":
         exceptions = ['id', 'question_id']
         selected_data = table_data[int(id)]
-        answers = data_manager.get_answers()
-        print(selected_data)
+        answers = data_manager.get_answers_for_question(id)
         return render_template("display-question.html",
                                selected_data=selected_data,
                                passable_list=answers,
