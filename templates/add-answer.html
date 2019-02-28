@@ -5,8 +5,6 @@
 
 <form action="{{url_for('add', type='answer', id=selected_data['id'])}}" method="post" name="add question">
     <div class="form-group">
-    <label for="title">answer title </label> <br>
-    <input class="form-control" name="title" id="title" type="text" required="True"> <br>
     <label for="message">ANSWER</label> <br>
     <textarea class="form-control" name="message" id="message" required="True"></textarea> <br>
         <button type="submit" class="btn" name="ask question" required="True">Submit</button>
