@@ -5,7 +5,7 @@
 <table class="table">
     <tr>
         {% for title in table_titles %}
-            <th>{{ title }}</th>
+            <th>{{ title.capitalize() }}</th>
         {% endfor %}
         <th></th>
     </tr>

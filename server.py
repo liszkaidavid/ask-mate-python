@@ -7,16 +7,20 @@ app = Flask(__name__)
 
 @app.route('/')
 def home_page():
-    table_titles = util.get_table_titles()
+    table_titles = util.get_table_titles('question')
     datas = data_manager.get_limited_questions()
-    return render_template("list.html", table_titles=table_titles, table_datas=datas)
+    return render_template("list.html",
+                           table_titles=table_titles,
+                           table_datas=datas)
 
 
 @app.route("/list")
 def list():
-    table_titles = util.get_table_titles()
+    table_titles = util.get_table_titles('question')
     table_data = data_manager.get_data()
-    return render_template("list.html", table_titles=table_titles, table_datas=table_data)
+    return render_template("list.html",
+                           table_titles=table_titles,
+                           table_datas=table_data)
 
 
 @app.route("/display-question/<question_id>")
@@ -24,24 +28,38 @@ def display_question(id):
     table_data = data_manager.get_data()
     selected_data = table_data[int(id)]
     answers = data_manager.get_answers()
-    return render_template("display-question.html", selected_data=selected_data, passable_list=answers)
+    print('ezis?')
+    return render_template("display-question.html",
+                           selected_data=selected_data,
+                           passable_list=answers)
 
 
 @app.route("/display/<type>/<id>")
 def display(type, id):
     table_data = data_manager.get_data()
     if type == "question":
+        exceptions = ['id', 'question_id']
         selected_data = table_data[int(id)]
         answers = data_manager.get_answers()
-        return render_template("display-question.html", selected_data=selected_data, passable_list=answers, question_id=id)
+        print(selected_data)
+        return render_template("display-question.html",
+                               selected_data=selected_data,
+                               passable_list=answers,
+                               question_id=id,
+                               exceptions=exceptions,
+                               table_title=util.get_table_titles(type))
     elif type == "answer":
         selected_data = table_data[int(id)]
         answers = data_manager.get_answers()
-        return render_template("display-answer.html", selected_data=selected_data, passable_list=answers)
+        return render_template("display-answer.html",
+                               selected_data=selected_data,
+                               passable_list=answers)
     elif type == "comment":
         selected_data = table_data[int(id)]
         answers = data_manager.get_answers()
-        return render_template("display-comment.html", selected_data=selected_data, passable_list=answers)
+        return render_template("display-comment.html",
+                               selected_data=selected_data,
+                               passable_list=answers)
     return redirect('/')
 
 
@@ -95,6 +113,7 @@ def edit(type, id):
         pass
     elif type == "comment":
         pass
+
 
 @app.route("/delete/<id>")
 def delete(id):
