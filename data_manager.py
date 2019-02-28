@@ -52,9 +52,9 @@ def insert_into_answer(cursor, datas):
 @connection.connection_handler
 def update_question(cursor, datas):
     cursor.execute(""" UPDATE question
-                        SET first_name=%s, last_name=%s, phone_number=%s, email=%s, application_code=%s
+                        SET submission_time=%s, view_number=%s, vote_number=%s, title=%s, message=%s, image=%s
                         WHERE id=%s
-    """, (datas["first_name"], datas["last_name"], datas["phone_number"], datas["email"], datas["application_code"], int(datas["id"])))
+    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"], datas["id"] ))
 
 
 @connection.connection_handler
@@ -62,20 +62,20 @@ def update_answer(cursor, datas):
     cursor.execute(""" UPDATE answer
                         SET first_name=%s, last_name=%s, phone_number=%s, email=%s, application_code=%s
                         WHERE id=%s
-    """, (datas["first_name"], datas["last_name"], datas["phone_number"], datas["email"], datas["application_code"], int(datas["id"])))
+    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"]))
 
 
 @connection.connection_handler
 def delete_question(cursor, datas):
     print(datas)
     cursor.execute("""
-                    DELETE FROM question WHERE first_name=%s AND last_name=%s
-    """, (datas["first_name"], datas["last_name"]))
+                    DELETE FROM question WHERE id=%s
+    """, (datas["id"]))
 
 
 @connection.connection_handler
 def delete_answer(cursor, datas):
     print(datas)
     cursor.execute("""
-                    DELETE FROM answer WHERE first_name=%s AND last_name=%s
-    """, (datas["first_name"], datas["last_name"]))
+                    DELETE FROM answer WHERE id=%s
+    """, (datas["id"]))
