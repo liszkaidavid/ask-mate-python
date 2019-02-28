@@ -47,20 +47,32 @@ def display(type, id):
 
 @app.route("/add/<type>/<id>", methods=["POST", "GET"])
 def add(type, id=0):
+    table_data = data_manager.get_data()
+    selected_data = table_data[int(id)]
     if type == "question":
         if request.method == 'POST':
             question_title = request.form.get('title')
             question = request.form.get('message')
-            print(question_title, question)
+            datas = {  'view_number':0,
+                    'vote_number':0,
+                    'title':question_title,
+                    'message':question,
+                    'image':''}
+            #submission_time//, view_number, vote_number, title, message, image
+            data_manager.insert_into_question(datas)
             return redirect('/')
         return render_template('add-question.html')
     elif type == "answer":
         if request.method == 'POST':
-            answer_title = request.form.get('title')
             answer = request.form.get('message')
-            print(answer_title, answer)
+            datas = {'vote_number': 0,
+                     'question_id': id,
+                     'message': answer,
+                     'image': ''}
+            # submission_time//, vote_number, question_id, message, image
+            data_manager.insert_into_answer(datas)
             return redirect('/')
-        return render_template('add-answer.html')
+        return render_template('add-answer.html', selected_data=selected_data)
     elif type == "comment":
         if request.method == 'POST':
             comment_title = request.form.get('comment-title')

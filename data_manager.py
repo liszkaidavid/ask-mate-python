@@ -1,5 +1,5 @@
 import connection
-
+from datetime import datetime
 
 @connection.connection_handler
 def get_data(cursor):
@@ -37,16 +37,18 @@ def get_title_names(cursor, table):
 
 @connection.connection_handler
 def insert_into_question(cursor, datas):
+    submission_time = datetime.now()
     cursor.execute("""
                     INSERT INTO question (submission_time, view_number, vote_number, title, message, image) VALUES (%s, %s, %s, %s, %s, %s)
-    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"]))
+    """, (submission_time, datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"]))
 
 
 @connection.connection_handler
 def insert_into_answer(cursor, datas):
+    submission_time = datetime.now()
     cursor.execute("""
-                    INSERT INTO answer (submission_time, view_number, vote_number, title, message, image) VALUES (%s, %s, %s, %s, %s, %s)
-    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"]))
+                    INSERT INTO answer (submission_time, vote_number, question_id, message, image) VALUES (%s, %s, %s, %s, %s)
+    """, (submission_time, datas["vote_number"], datas["question_id"], datas["message"], datas["image"]))
 
 
 @connection.connection_handler
