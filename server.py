@@ -49,6 +49,9 @@ def display(type, id):
 def add(type, id=0):
     if type == "question":
         if request.method == 'POST':
+            question_title = request.form.get('title')
+            question = request.form.get('message')
+            print(question_title, question)
             return redirect('/')
         return render_template('add-question.html')
     elif type == "answer":
@@ -60,6 +63,9 @@ def add(type, id=0):
         return render_template('add-answer.html')
     elif type == "comment":
         if request.method == 'POST':
+            comment_title = request.form.get('comment-title')
+            comment = request.form.get('comment')
+            print(comment_title, comment)
             return redirect('/')
         return render_template('add-comment.html')
 
