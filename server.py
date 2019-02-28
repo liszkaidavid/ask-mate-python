@@ -75,9 +75,14 @@ def add(type, id=0):
         return render_template('add-answer.html', selected_data=selected_data)
     elif type == "comment":
         if request.method == 'POST':
-            comment_title = request.form.get('comment-title')
             comment = request.form.get('comment')
-            print(comment_title, comment)
+            #question_id, answer_id, message, submission_time, edited_count
+            datas = {'question_id': 0,
+                     'answer_id': id,
+                     'message': comment,
+                     'edited_count': 0
+                     }
+            data_manager.insert_into_comment(datas)
             return redirect('/')
         return render_template('add-comment.html')
 
