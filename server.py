@@ -46,18 +46,18 @@ def display(type, id):
 
 
 @app.route("/add/<type>/<id>", methods=["POST", "GET"])
-def add(type, id=0):
+def add(type, id):
     table_data = data_manager.get_data()
     selected_data = table_data[int(id)]
     if type == "question":
         if request.method == 'POST':
             question_title = request.form.get('title')
             question = request.form.get('message')
-            datas = {  'view_number':0,
-                    'vote_number':0,
-                    'title':question_title,
-                    'message':question,
-                    'image':''}
+            datas = {'view_number': 0,
+                    'vote_number': 0,
+                    'title': question_title,
+                    'message': question,
+                    'image': ''}
             #submission_time//, view_number, vote_number, title, message, image
             data_manager.insert_into_question(datas)
             return redirect('/')
@@ -90,6 +90,10 @@ def edit(type, id):
         pass
     elif type == "comment":
         pass
+
+@app.route("/delete")
+def delete(id):
+    return redirect("/list")
 
 #     database = data_manager.read_to_dict(placeholder_path)
 #     for elem in database['rows']:
