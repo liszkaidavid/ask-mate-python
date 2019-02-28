@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Answer</h2>
+<table class="table">
+        {% for key, answer in selected_data.items() %}
+        <tr><th>{{key}}</th><td>{{answer}}</td>
+            {% if key == "id"%}
+            <a href="{{ url_for('display',type='question', id=data['id']) }}">{{ value }}</a>
+            {% endif%}
+            {% endfor %}</tr>
+</table>
+</div>
+
+{% endblock %}

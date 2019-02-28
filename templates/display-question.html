@@ -9,9 +9,11 @@
         <tr><th>{{key}}</th><td>{{answer}}</td>
             {% if key == "id"%}
             {% endif%}
-            {% endfor %}</tr>
+            {% endfor %}
+            <a href="{{url_for('add', type='answer', id=selected_data['id'])}}">ADD ANSWER</a>
+        </tr>
 </table>
-    <a href="{{url_for('add', type='comment', id='0')}}">comment</a>
+    <a href="{{url_for('add', type='comment', id=selected_data['id'])}}">comment</a>
     <h2>Answers</h2>
     <table class="table">
             {% for elem in passable_list %}

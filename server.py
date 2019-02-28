@@ -19,7 +19,7 @@ def list():
     return render_template("experimental.html", table_titles=table_titles, table_datas=table_data)
 
 
-@app.route("/display-question/<id>")
+@app.route("/display-question/<question_id>")
 def display_question(id):
     table_data = data_manager.get_data()
     selected_data = table_data[int(id)]
@@ -27,43 +27,48 @@ def display_question(id):
     return render_template("display-question.html", selected_data=selected_data, passable_list=answers)
 
 
-@app.route("/display-question/<id>/edit")
-def edit_question(id):
-    pass
+@app.route("/display/<type>/<id>")
+def display(type, id):
+    table_data = data_manager.get_data()
+    if type == "question":
+        selected_data = table_data[int(id)]
+        answers = data_manager.get_answers()
+        return render_template("display-question.html", selected_data=selected_data, passable_list=answers, question_id=id)
+    elif type == "answer":
+        selected_data = table_data[int(id)]
+        answers = data_manager.get_answers()
+        return render_template("display-answer.html", selected_data=selected_data, passable_list=answers)
+    elif type == "comment":
+        pass
+    return redirect('/')
 
 
-@app.route("/display-answer/<id>")
-def display_answer():
-    pass
 
 
-@app.route("/display-question/<id>/add-answer")
-def add_answer():
-    pass
-
-
-@app.route("/add/<type>/<id>")
+@app.route("/add/<type>/<id>", methods=["POST", "GET"])
 def add(type, id):
+    if type == "question":
+        if request.method == 'POST':
+            return redirect('/')
+        return render_template('add-question.html')
+    elif type == "answer":
+        if request.method == 'POST':
+            return redirect('/')
+        return render_template('add-answer.html')
+    elif type == "comment":
+        if request.method == 'POST':
+            return redirect('/')
+        return render_template('add-comment.html')
+    return redirect('/')
+
+@app.route("/edit/<type>/<id>", methods=["POST", "GET"])
+def edit(type, id):
     if type == "question":
         pass
     elif type == "answer":
         pass
-    elif  type == "comment":
+    elif type == "comment":
         pass
-    return redirect('/')
-
-#@app.route("/display-question/<id</add-comment", "/display-answer/<id>/add-comment")
-def add_comment():
-    pass
-
-
-#@app.route("/display-question/<id</add-comment/<comment_id>/edit-comment", "/display-answer/<id>/add-comment/<comment_id>/edit-comment")
-def edit_comment():
-    pass
-
-#@app.route("/display-question/<id</add-comment/<comment_id>", "/display-answer/<id>/add-comment/<comment_id>")
-def delete_comment():
-    pass
 
 #     database = data_manager.read_to_dict(placeholder_path)
 #     for elem in database['rows']:

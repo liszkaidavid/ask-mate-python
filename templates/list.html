@@ -12,7 +12,7 @@
     <tr>
         {% for title, value in data.items()  %}
             {% if title == "title" %}
-        <td><a href="{{ url_for('display_question', id=data['id']) }}">{{ value }}</a></td>
+        <td><a href="{{ url_for('display',type='question', id=data['id']) }}">{{ value }}</a></td>
             {% else %}
             <td> {{ value }} </td>
             {% endif %}
