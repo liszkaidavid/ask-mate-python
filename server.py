@@ -46,13 +46,16 @@ def display(type, id):
 
 
 @app.route("/add/<type>/<id>", methods=["POST", "GET"])
-def add(type, id):
+def add(type, id=0):
     if type == "question":
         if request.method == 'POST':
             return redirect('/')
         return render_template('add-question.html')
     elif type == "answer":
         if request.method == 'POST':
+            answer_title = request.form.get('title')
+            answer = request.form.get('message')
+            print(answer_title, answer)
             return redirect('/')
         return render_template('add-answer.html')
     elif type == "comment":
