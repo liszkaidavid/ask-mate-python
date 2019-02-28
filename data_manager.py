@@ -79,3 +79,10 @@ def delete_answer(cursor, datas):
     cursor.execute("""
                     DELETE FROM answer WHERE id=%s
     """, (datas["id"]))
+
+
+@connection.connection_handler
+def insert_into_comment(cursor, datas):
+    cursor.execute("""
+                    INSERT INTO comment (submission_time, view_number, vote_number, title, message, image) VALUES (%s, %s, %s, %s, %s, %s)
+    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"]))
