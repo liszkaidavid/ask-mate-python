@@ -86,5 +86,5 @@ def delete_answer(cursor, datas):
 @connection.connection_handler
 def insert_into_comment(cursor, datas):
     cursor.execute("""
-                    INSERT INTO comment (submission_time, view_number, vote_number, title, message, image) VALUES (%s, %s, %s, %s, %s, %s)
-    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"]))
+                    INSERT INTO comment (submission_time, view_number, vote_number, message, image) VALUES (%s, %s, %s, %s, %s, %s)
+    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["message"], datas["image"]))
