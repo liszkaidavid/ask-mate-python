@@ -50,18 +50,18 @@ def add(type, id):
     if type == "question":
         if request.method == 'POST':
             return redirect('/')
+        return render_template('add-question.html')
     elif type == "answer":
         if request.method == 'POST':
             return redirect('/')
+        return render_template('add-answer.html')
     elif type == "comment":
         if request.method == 'POST':
             return redirect('/')
         return render_template('add-comment.html')
-
-
     return redirect('/')
 
-@app.route("/edit/<type>/<id>")
+@app.route("/edit/<type>/<id>", methods=["POST", "GET"])
 def edit(type, id):
     if type == "question":
         pass
