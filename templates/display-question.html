@@ -11,6 +11,7 @@
             {% endif%}
             {% endfor %}</tr>
 </table>
+    <a href="{{url_for('add', type='comment', id='0')}}">comment</a>
     <h2>Answers</h2>
     <table class="table">
             {% for elem in passable_list %}

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<form action="/add-comment" method="post" name="add comment">
+    <div class="form-group">
+    <label for="comment-title">comment-title</label> <br>
+    <input class="form-control" name="comment-title" id="comment-title" type="text" required="True"> <br>
+    <label for="comment">comment</label> <br>
+    <textarea class="form-control" name="comment" id="comment" required="True">TEST</textarea> <br>
+        <button type="submit" class="btn" name="add-comment" required="True">Submit</button>
+    </div>
+</form>
+
+
+
+{% endblock %}

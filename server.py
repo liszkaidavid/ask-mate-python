@@ -28,7 +28,7 @@ def display_question(id):
 
 
 @app.route("/display-question/<id>/edit")
-def edit_question():
+def edit_question(id):
     pass
 
 
@@ -41,6 +41,16 @@ def display_answer():
 def add_answer():
     pass
 
+
+@app.route("/add/<type>/<id>")
+def add(type, id):
+    if type == "question":
+        pass
+    elif type == "answer":
+        pass
+    elif  type == "comment":
+        pass
+    return redirect('/')
 
 #@app.route("/display-question/<id</add-comment", "/display-answer/<id>/add-comment")
 def add_comment():
