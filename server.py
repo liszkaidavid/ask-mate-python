@@ -96,7 +96,7 @@ def edit(type, id):
     elif type == "comment":
         pass
 
-@app.route("/delete")
+@app.route("/delete/<id>")
 def delete(id):
     return redirect("/list")
 
