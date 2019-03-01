@@ -71,10 +71,11 @@ def insert_into_answer(cursor, datas):
 
 @connection.connection_handler
 def update_question(cursor, datas):
+    submission_time = datetime.now()
     cursor.execute(""" UPDATE question
                         SET submission_time=%s, view_number=%s, vote_number=%s, title=%s, message=%s, image=%s
                         WHERE id=%s
-    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"], datas["id"] ))
+    """, (submission_time, datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"], datas["id"] ))
 
 
 @connection.connection_handler
