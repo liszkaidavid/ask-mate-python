@@ -3,16 +3,17 @@
 {% block content %}
 
 <h2>Edit Question</h2>
-<form action="{{url_for('edit', type='question', id=question_id)}}" method="post" name="edit-question">
+
+<form action="{{url_for('edit', type='question', id=question_id)}}" method="POST" name="edit-question">
     <div class="form-group">
     <input type="hidden" name="id" value="{{updata['id']}}">
     <input type="hidden" name="submission_time" value="{{updata['submission_time']}}">
     <input type="hidden" name="view_number" value="{{updata['view_number']}}">
     <input type="hidden" name="vote_number" value="{{updata['vote_number']}}">
     <input type="hidden" name="image" value="{{updata['image']}}">
-    <label>{{headers[4]}} </label> <br>
+    <label>Title </label> <br>
     <input class="form-control" name="title" size="80" type="text" required="True" value="{{ updata['title']}}"> <br>
-    <label>{{headers[5]}}</label> <br>
+    <label>Message</label> <br>
     <textarea class="form-control" name="message" required="True" rows="4" cols="50">{{ updata["message"]}}</textarea> <br>
     <input type="submit" class="btn" required="True">
     </div>

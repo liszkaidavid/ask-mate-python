@@ -107,7 +107,9 @@ def add(type, id):
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
 def edit(type, id):
     if type == "question":
-        pass
+        table_data = data_manager.get_data()
+        selected_data = table_data[int(id)]
+        return render_template('edit-question.html', updata=selected_data)
     elif type == "answer":
         pass
     elif type == "comment":
@@ -125,12 +127,6 @@ def delete(type, id):
         pass
     return redirect("/list")
 
-#     database = data_manager.read_to_dict(placeholder_path)
-#     for elem in database['rows']:
-#         submission_time = elem['submission_time']
-#         submission_time = util.make_timestamp_readable(int(submission_time))
-#         elem['submission_time'] = submission_time
-#     return render_template("list.html", db=database)
 #
 #
 # # Todo : route - /question/<question_id>
