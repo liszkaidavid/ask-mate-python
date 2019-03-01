@@ -39,7 +39,7 @@ def display(type, id):
     table_data = data_manager.get_data()
     if type == "question":
         exceptions = ['id', 'question_id']
-        selected_data = table_data[int(id)]
+        selected_data = data_manager.get_question(id)[0]
         answers = data_manager.get_answers_for_question(id)
         return render_template("display-question.html",
                                selected_data=selected_data,
@@ -64,8 +64,7 @@ def display(type, id):
 
 @app.route("/add/<type>/<id>", methods=["POST", "GET"])
 def add(type, id):
-    table_data = data_manager.get_data()
-    selected_data = table_data[int(id)]
+    selected_data = data_manager.get_question(id)[0]
     if type == "question":
         if request.method == 'POST':
             question_title = request.form.get('title')

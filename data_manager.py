@@ -26,6 +26,16 @@ def get_answers_for_question(cursor, question_id):
     requested_info = cursor.fetchall()
     return requested_info
 
+
+@connection.connection_handler
+def get_question(cursor, question_id):
+    cursor.execute("""
+                            SELECT * FROM question WHERE id=%s
+            """, question_id)
+    requested_info = cursor.fetchall()
+    return requested_info
+
+
 @connection.connection_handler
 def get_limited_questions(cursor):
     cursor.execute("""
