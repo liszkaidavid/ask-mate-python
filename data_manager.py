@@ -76,19 +76,17 @@ def update_answer(cursor, datas):
 
 
 @connection.connection_handler
-def delete_question(cursor, datas):
-    print(datas)
+def delete_question(cursor, question_id):
     cursor.execute("""
                     DELETE FROM question WHERE id=%s
-    """, (datas["id"]))
+    """, question_id)
 
 
 @connection.connection_handler
-def delete_answer(cursor, datas):
-    print(datas)
+def delete_answer(cursor, question_id):
     cursor.execute("""
-                    DELETE FROM answer WHERE id=%s
-    """, (datas["id"]))
+                    DELETE FROM answer WHERE question_id=%s
+    """, question_id)
 
 
 @connection.connection_handler

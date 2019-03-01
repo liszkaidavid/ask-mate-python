@@ -18,7 +18,7 @@
             <td> {{ value }} </td>
             {% endif %}
         {% endfor %}
-        <td><a href="{{ url_for('delete', id=data['id'] )}}">del</a></td>
+        <td><a href="{{ url_for('delete',type='question', id=data['id'])}}">del</a></td>
     </tr>
         {% endfor %}
 </table>

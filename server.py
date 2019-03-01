@@ -114,8 +114,15 @@ def edit(type, id):
         pass
 
 
-@app.route("/delete/<id>")
-def delete(id):
+@app.route("/delete/<type><id>")
+def delete(type, id):
+    if type == "question":
+        data_manager.delete_answer(id)
+        data_manager.delete_question(id)
+    elif type == "answer":
+        pass
+    elif type == "comment":
+        pass
     return redirect("/list")
 
 #     database = data_manager.read_to_dict(placeholder_path)
