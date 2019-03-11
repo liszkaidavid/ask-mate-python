@@ -101,8 +101,24 @@ def delete_answer(cursor, question_id):
 
 
 @connection.connection_handler
+def delete_question_tag(cursor, question_tag_id):
+    cursor.execute("""
+                    DELETE FROM question_tag WHERE question_id=%s
+    """, question_tag_id)
+
+
+@connection.connection_handler
+def delete_comment(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM question_tag WHERE question_id=%s
+    """, question_id)
+
+
+@connection.connection_handler
 def insert_into_comment(cursor, datas):
     submission_time = datetime.now()
     cursor.execute("""
                     INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count) VALUES (%s, %s, %s, %s, %s)
     """, (datas["question_id"], datas["answer_id"], datas["message"], submission_time, datas['edited_count']))
+
+

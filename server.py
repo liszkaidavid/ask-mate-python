@@ -28,7 +28,6 @@ def display_question(id):
     table_data = data_manager.get_data()
     selected_data = table_data[int(id)]
     answers = data_manager.get_answers()
-    print('ezis?')
     return render_template("display-question.html",
                            selected_data=selected_data,
                            passable_list=answers)
@@ -130,13 +129,13 @@ def edit(type, id):
 @app.route("/delete/<type><id>")
 def delete(type, id):
     if type == "question":
-        data_manager.delete_answer(id)
         data_manager.delete_question(id)
     elif type == "answer":
-        pass
+        data_manager.delete_answer(id)
     elif type == "comment":
         pass
     return redirect("/list")
+
 
 if __name__ == '__main__':
     app.run()
