@@ -130,3 +130,10 @@ def insert_into_comment(cursor, datas):
     """, (datas["question_id"], datas["answer_id"], datas["message"], submission_time, datas['edited_count']))
 
 
+@connection.connection_handler
+def get_question_id_by_answer(cursor, answer_id):
+    cursor.execute("""
+                            SELECT question_id FROM answer WHERE id=%s
+            """, answer_id)
+    requested_info = cursor.fetchall()
+    return requested_info

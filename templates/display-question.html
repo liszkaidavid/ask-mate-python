@@ -70,7 +70,8 @@
           {{ answer.view_number }}
         </div>
         <div class="col-md-auto">
-          <a href="{{ url_for('edit', type='answer', id=answer.id) }}">edit answer</a>
+          <a href="{{ url_for('edit', type='answer', id=answer.id) }}">edit answer | </a>
+          <a href="{{ url_for('add', type='comment', id=answer.id )}}">add comment</>
           <td><a href="{{ url_for('delete',type='answer', id=answer.id)}}">del</a></td>
         </div>
       </div>
