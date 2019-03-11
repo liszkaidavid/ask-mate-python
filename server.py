@@ -107,7 +107,7 @@ def add(type, id):
 def edit(type, id):
     if type == "question":
         table_data = data_manager.get_data()
-        selected_data = table_data[int(id)-1]
+        selected_data = table_data[int(id)]
         if request.method == 'POST':
             question_title = request.form.get('title')
             question = request.form.get('message')
