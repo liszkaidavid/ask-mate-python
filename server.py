@@ -28,7 +28,6 @@ def display_question(id):
     table_data = data_manager.get_data()
     selected_data = table_data[int(id)]
     answers = data_manager.get_answers()
-    print('ezis?')
     return render_template("display-question.html",
                            selected_data=selected_data,
                            passable_list=answers)
@@ -64,7 +63,6 @@ def display(type, id):
 
 @app.route("/add/<type>/<id>", methods=["POST", "GET"])
 def add(type, id):
-    selected_data = data_manager.get_question(id)[0]
     if type == "question":
         if request.method == 'POST':
             question_title = request.form.get('title')
@@ -79,6 +77,7 @@ def add(type, id):
             return redirect('/')
         return render_template('add-question.html')
     elif type == "answer":
+        selected_data = data_manager.get_question(id)[0]
         if request.method == 'POST':
             answer = request.form.get('message')
             datas = {'vote_number': 0,
@@ -90,6 +89,7 @@ def add(type, id):
             return redirect('/')
         return render_template('add-answer.html', selected_data=selected_data)
     elif type == "comment":
+        selected_data = data_manager.get_question(id)[0]
         if request.method == 'POST':
             comment = request.form.get('comment')
             #question_id, answer_id, message, submission_time, edited_count
@@ -106,8 +106,7 @@ def add(type, id):
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
 def edit(type, id):
     if type == "question":
-        table_data = data_manager.get_data()
-        selected_data = table_data[int(id)]
+        selected_data = data_manager.get_question(id)
         if request.method == 'POST':
             question_title = request.form.get('title')
             question = request.form.get('message')
@@ -120,7 +119,7 @@ def edit(type, id):
             # submission_time//, view_number, vote_number, title, message, image
             data_manager.update_question(datas)
             return redirect('/')
-        return render_template('edit-question.html', updata=selected_data, id=id)
+        return render_template('edit-question.html', updata=selected_data[0], id=id)
     elif type == "answer":
         pass
     elif type == "comment":
@@ -130,13 +129,13 @@ def edit(type, id):
 @app.route("/delete/<type><id>")
 def delete(type, id):
     if type == "question":
-        data_manager.delete_answer(id)
         data_manager.delete_question(id)
     elif type == "answer":
-        pass
+        data_manager.delete_answer(id)
     elif type == "comment":
         pass
     return redirect("/list")
+
 
 if __name__ == '__main__':
     app.run()
