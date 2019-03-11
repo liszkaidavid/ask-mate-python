@@ -121,7 +121,19 @@ def edit(type, id):
             return redirect('/')
         return render_template('edit-question.html', updata=selected_data[0], id=id)
     elif type == "answer":
-        pass
+        headers = data_manager.get_title_names('answer')
+        selected_data = data_manager.get_answer(id)[0]
+        if request.method == 'POST':
+            answer = request.form.get('message')
+            datas = {'vote_number': 0,
+                     'question_id': selected_data['question_id'],
+                     'message': answer,
+                     'image': '',
+                     'id':id}
+            # submission_time//, vote_number, question_id, message, image
+            data_manager.update_answer(datas)
+            return redirect('/')
+        return render_template('edit-answer.html', updata=selected_data, answer_id=id, headers=headers)
     elif type == "comment":
         pass
     return redirect('/')

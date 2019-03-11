@@ -35,6 +35,13 @@ def get_question(cursor, question_id):
     requested_info = cursor.fetchall()
     return requested_info
 
+@connection.connection_handler
+def get_answer(cursor, answer_id):
+    cursor.execute("""
+                            SELECT * FROM answer WHERE id=%s
+            """, answer_id)
+    requested_info = cursor.fetchall()
+    return requested_info
 
 @connection.connection_handler
 def get_limited_questions(cursor):
@@ -80,10 +87,11 @@ def update_question(cursor, datas):
 
 @connection.connection_handler
 def update_answer(cursor, datas):
+    submission_time = datetime.now()
     cursor.execute(""" UPDATE answer
-                        SET first_name=%s, last_name=%s, phone_number=%s, email=%s, application_code=%s
+                        SET submission_time=%s, vote_number=%s, question_id=%s, message=%s, image=%s
                         WHERE id=%s
-    """, (datas["submission_time"], datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"]))
+    """, (submission_time, datas["vote_number"], datas["question_id"], datas["message"], datas["image"], datas['id']))
 
 
 @connection.connection_handler
