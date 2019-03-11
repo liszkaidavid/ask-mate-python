@@ -89,7 +89,6 @@ def add(type, id):
             return redirect('/')
         return render_template('add-answer.html', selected_data=selected_data)
     elif type == "comment":
-        selected_data = data_manager.get_question(id)[0]
         if request.method == 'POST':
             comment = request.form.get('comment')
             #question_id, answer_id, message, submission_time, edited_count
@@ -100,7 +99,7 @@ def add(type, id):
                      }
             data_manager.insert_into_comment(datas)
             return redirect('/')
-        return render_template('add-comment.html')
+        return render_template('add-comment.html', answer_id=id)
 
 
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
@@ -125,6 +124,7 @@ def edit(type, id):
     elif type == "comment":
         pass
     return redirect('/')
+
 
 @app.route("/delete/<type><id>")
 def delete(type, id):
