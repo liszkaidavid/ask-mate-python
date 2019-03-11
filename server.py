@@ -91,8 +91,8 @@ def add(type, id):
     elif type == "comment":
         if request.method == 'POST':
             comment = request.form.get('comment')
-            #question_id, answer_id, message, submission_time, edited_count
-            datas = {'question_id': 0,
+            question_id = data_manager.get_question_id_by_answer(id)[0]["question_id"]
+            datas = {'question_id': question_id,
                      'answer_id': id,
                      'message': comment,
                      'edited_count': 0
