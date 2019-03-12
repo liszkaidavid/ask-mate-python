@@ -132,9 +132,10 @@ def insert_into_comment(cursor, datas):
 
 @connection.connection_handler
 def register_user(cursor, datas):
+    registration_time = datetime.now()
     cursor.execute('''
-    INSERT INTO user_list(user_name, password, rank) VALUES  (%s, %s, %s)
-    ''', (datas['user_name'], datas['password'], datas['rank']))
+    INSERT INTO user_list(registration_time, user_name, password, rank) VALUES  (%s, %s, %s, %s)
+    ''', (registration_time, datas['user_name'], datas['password'], datas['rank']))
 
 @connection.connection_handler
 def list_users(cursor):
