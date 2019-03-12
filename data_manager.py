@@ -116,10 +116,10 @@ def delete_question_tag(cursor, question_tag_id):
 
 
 @connection.connection_handler
-def delete_comment(cursor, question_id):
+def delete_comment(cursor, comment_id):
     cursor.execute("""
-                    DELETE FROM question_tag WHERE question_id=%s
-    """, [question_id])
+                    DELETE FROM comment WHERE id=%s
+    """, [comment_id])
 
 
 @connection.connection_handler
@@ -155,3 +155,12 @@ def get_comment_by_id(cursor, comment_id):
             """, [comment_id])
     requested_info = cursor.fetchall()
     return requested_info
+
+
+@connection.connection_handler
+def update_comment(cursor, datas):
+    submission_time = datetime.now()
+    cursor.execute(""" UPDATE comment
+                        SET submission_time=%s, message=%s, edited_count=%s
+                        WHERE id=%s
+    """, (submission_time,  datas["message"], datas["edited_count"], datas['id']))

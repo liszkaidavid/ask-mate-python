@@ -115,16 +115,20 @@ def edit(type, id):
                      'question_id': selected_data['question_id'],
                      'message': answer,
                      'image': '',
-                     'id':id}
+                     'id': id}
             # submission_time//, vote_number, question_id, message, image
             data_manager.update_answer(datas)
             return redirect('/')
         return render_template('edit-answer.html', updata=selected_data, answer_id=id)
     elif type == "comment":
         selected_data = data_manager.get_comment_by_id(id)[0]
-        print(selected_data)
-        return render_template("edit-comment.html", updata=selected_data)
-    return redirect('/')
+        if request.method == "POST":
+            datas = {'message': request.form.get('message'),
+                     'id': id,
+                     'edited_count': selected_data['edited_count'] + 1}
+            data_manager.update_comment(datas)
+            return redirect('/')
+        return render_template("edit-comment.html", updata=selected_data, comment_id=id)
 
 
 @app.route("/delete/<type>/<id>")
@@ -134,7 +138,7 @@ def delete(type, id):
     elif type == "answer":
         data_manager.delete_answer(id)
     elif type == "comment":
-        pass
+        data_manager.delete_comment(id)
     return redirect("/list")
 
 
