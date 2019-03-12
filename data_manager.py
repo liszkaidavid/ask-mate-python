@@ -177,3 +177,10 @@ def update_comment(cursor, datas):
                         SET submission_time=%s, message=%s, edited_count=%s
                         WHERE id=%s
     """, (submission_time,  datas["message"], datas["edited_count"], datas['id']))
+
+@connection.connection_handler
+def list_users(cursor):
+    cursor.execute('''
+    SELECT * FROM user_list
+    ''')
+    users = cursor.fetchall()
