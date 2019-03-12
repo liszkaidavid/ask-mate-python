@@ -1,6 +1,7 @@
 import connection
 from datetime import datetime
 
+##GET##
 
 @connection.connection_handler
 def get_data(cursor):
@@ -54,12 +55,40 @@ def get_limited_questions(cursor):
 
 
 @connection.connection_handler
+def get_question_id_by_answer(cursor, answer_id):
+    cursor.execute("""
+                            SELECT question_id FROM answer WHERE id=%s
+            """, [answer_id])
+    requested_info = cursor.fetchall()
+    return requested_info
+
+
+@connection.connection_handler
+def get_comments_by_question_id(cursor, question_id):
+    cursor.execute("""
+                            SELECT * FROM comment WHERE question_id=%s
+            """, [question_id])
+    requested_info = cursor.fetchall()
+    return requested_info
+
+
+@connection.connection_handler
+def get_comment_by_id(cursor, comment_id):
+    cursor.execute("""
+                            SELECT * FROM comment WHERE id=%s
+            """, [comment_id])
+    requested_info = cursor.fetchall()
+    return requested_info
+
+@connection.connection_handler
 def get_title_names(cursor, table):
     table_query = f"SELECT column_name FROM information_schema.columns WHERE table_name='{table}'"
     cursor.execute(table_query)
     requested_data = cursor.fetchall()
     return requested_data
 
+
+##INSERT##
 
 @connection.connection_handler
 def insert_into_question(cursor, datas):
@@ -70,11 +99,30 @@ def insert_into_question(cursor, datas):
 
 
 @connection.connection_handler
+def insert_into_comment(cursor, datas):
+    submission_time = datetime.now()
+    cursor.execute("""
+                    INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count) VALUES (%s, %s, %s, %s, %s)
+    """, (datas["question_id"], datas["answer_id"], datas["message"], submission_time, datas['edited_count']))
+
+
+@connection.connection_handler
 def insert_into_answer(cursor, datas):
     submission_time = datetime.now()
     cursor.execute("""
                     INSERT INTO answer (submission_time, vote_number, question_id, message, image) VALUES (%s, %s, %s, %s, %s)
     """, (submission_time, datas["vote_number"], datas["question_id"], datas["message"], datas["image"]))
+
+
+##UPDATE##
+
+@connection.connection_handler
+def update_comment(cursor, datas):
+    submission_time = datetime.now()
+    cursor.execute(""" UPDATE comment
+                        SET submission_time=%s, message=%s, edited_count=%s
+                        WHERE id=%s
+    """, (submission_time,  datas["message"], datas["edited_count"], datas['id']))
 
 
 @connection.connection_handler
@@ -94,6 +142,8 @@ def update_answer(cursor, datas):
                         WHERE id=%s
     """, (submission_time, datas["vote_number"], datas["question_id"], datas["message"], datas["image"], datas['id']))
 
+
+##DELETE##
 
 @connection.connection_handler
 def delete_question(cursor, question_id):
@@ -123,12 +173,7 @@ def delete_comment(cursor, comment_id):
     """, [comment_id])
 
 
-@connection.connection_handler
-def insert_into_comment(cursor, datas):
-    submission_time = datetime.now()
-    cursor.execute("""
-                    INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count) VALUES (%s, %s, %s, %s, %s)
-    """, (datas["question_id"], datas["answer_id"], datas["message"], submission_time, datas['edited_count']))
+##REGISTER##
 
 @connection.connection_handler
 def register_user(cursor, datas):
@@ -145,38 +190,3 @@ def list_users(cursor):
     users = cursor.fetchall()
     return users
 
-
-@connection.connection_handler
-def get_question_id_by_answer(cursor, answer_id):
-    cursor.execute("""
-                            SELECT question_id FROM answer WHERE id=%s
-            """, [answer_id])
-    requested_info = cursor.fetchall()
-    return requested_info
-
-
-@connection.connection_handler
-def get_comments_by_question_id(cursor, question_id):
-    cursor.execute("""
-                            SELECT * FROM comment WHERE question_id=%s
-            """, [question_id])
-    requested_info = cursor.fetchall()
-    return requested_info
-
-
-@connection.connection_handler
-def get_comment_by_id(cursor, comment_id):
-    cursor.execute("""
-                            SELECT * FROM comment WHERE id=%s
-            """, [comment_id])
-    requested_info = cursor.fetchall()
-    return requested_info
-
-
-@connection.connection_handler
-def update_comment(cursor, datas):
-    submission_time = datetime.now()
-    cursor.execute(""" UPDATE comment
-                        SET submission_time=%s, message=%s, edited_count=%s
-                        WHERE id=%s
-    """, (submission_time,  datas["message"], datas["edited_count"], datas['id']))
