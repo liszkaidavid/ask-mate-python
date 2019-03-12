@@ -88,6 +88,19 @@ def add(type, id):
             data_manager.insert_into_comment(datas)
             return redirect('/')
         return render_template('add-comment.html', answer_id=id)
+    elif type == "user":
+        if request.method == 'POST':
+            user_name = request.form.get('user_name')
+            hashed_password = util.hash_password(request.form.get('password'))
+            datas = {
+                'user_name': user_name,
+                'password': hashed_password,
+                'rank': 4
+            }
+            data_manager.register_user(datas)
+            return redirect('/')
+        return render_template('add-user.html')
+
 
 
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
