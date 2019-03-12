@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<form action="{{url_for('login'}}" method="post" name="login">
+    <div class="form-group">
+    <label for="user_name">Username</label> <br>
+    <input class="form-control" name="user_name" id="user_name" type="text" required="True"> <br>
+    <label for="password">password</label> <br>
+    <input class="form-control" name="password" id="password" type="text" required="True"> <br>
+        <button type="submit" class="btn" name="add user" required="True">LOGIN</button>
+    </div>
+</form>
+
+{% endblock %}
