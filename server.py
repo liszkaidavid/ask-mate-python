@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect, abort, url_for, flash
+from flask import Flask, render_template, request, redirect, abort, url_for, flash, session
 import data_manager, util
-from flask_login import LoginManager,login_user
+from flask_login import LoginManager,login_user, UserMixin
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 
 @login_manager.user_loader
@@ -17,18 +19,18 @@ def login():
     # Here we use a class of some kind to represent and validate our
     # client-side form data. For example, WTForms is a library that will
     # handle this for us, and we use a custom LoginForm to validate.
-    form = LoginManager.LoginForm()
-    if form.validate_on_submit():
+    if request.method == 'POST':
         # Login and validate the user.
         # user should be an instance of your `User` class
-        login_user(LoginManager.user)
+        login_user(user)
 
         flash('Logged in successfully.')
 
         next = request.args.get('next')
         # is_safe_url should check if the url is safe for redirects.
-        # See http://flask.pocoo.org/snippets/62/ for an example.
-        if not LoginManager.is_safe_url(next):
+        # See http://flask.pocoo.org/snippets/62/ for an example.7
+        # TODO implement is_safe_url
+        if not is_safe_url(next):
             return abort(400)
 
         return redirect(next or url_for('index'))
@@ -182,6 +184,11 @@ def delete(type, id):
     elif type == "comment":
         data_manager.delete_comment(id)
     return redirect("/list")
+
+
+class User(UserMixin):
+    def __init__(self):
+        super().__init__(self)
 
 
 if __name__ == '__main__':
