@@ -22,8 +22,8 @@ DROP SEQUENCE IF EXISTS public.user_id_seq;
 CREATE TABLE user_list (
     id serial NOT NULL,
     registration_time timestamp without time zone,
-    user_name integer,
-    password bit[418],
+    user_name text,
+    password char(60),
     rank integer
 );
 
