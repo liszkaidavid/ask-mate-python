@@ -22,7 +22,7 @@ def get_answers(cursor):
 def get_answers_for_question(cursor, question_id):
     cursor.execute("""
                             SELECT * FROM answer WHERE question_id=%s
-            """, question_id)
+            """, [question_id])
     requested_info = cursor.fetchall()
     return requested_info
 
@@ -31,7 +31,7 @@ def get_answers_for_question(cursor, question_id):
 def get_question(cursor, question_id):
     cursor.execute("""
                             SELECT * FROM question WHERE id=%s
-            """, question_id)
+            """, [question_id])
     requested_info = cursor.fetchall()
     return requested_info
 
@@ -39,7 +39,7 @@ def get_question(cursor, question_id):
 def get_answer(cursor, answer_id):
     cursor.execute("""
                             SELECT * FROM answer WHERE id=%s
-            """, answer_id)
+            """, [answer_id])
     requested_info = cursor.fetchall()
     return requested_info
 
@@ -98,28 +98,28 @@ def update_answer(cursor, datas):
 def delete_question(cursor, question_id):
     cursor.execute("""
                     DELETE FROM question WHERE id=%s
-    """, question_id)
+    """, [question_id])
 
 
 @connection.connection_handler
 def delete_answer(cursor, question_id):
     cursor.execute("""
                     DELETE FROM answer WHERE id=%s
-    """, question_id)
+    """, [question_id])
 
 
 @connection.connection_handler
 def delete_question_tag(cursor, question_tag_id):
     cursor.execute("""
                     DELETE FROM question_tag WHERE question_id=%s
-    """, question_tag_id)
+    """, [question_tag_id])
 
 
 @connection.connection_handler
-def delete_comment(cursor, question_id):
+def delete_comment(cursor, comment_id):
     cursor.execute("""
-                    DELETE FROM question_tag WHERE question_id=%s
-    """, question_id)
+                    DELETE FROM comment WHERE id=%s
+    """, [comment_id])
 
 
 @connection.connection_handler
@@ -143,3 +143,37 @@ def list_users(cursor):
     SELECT * FROM user_list
     ''')
     users = cursor.fetchall()
+@connection.connection_handler
+def get_question_id_by_answer(cursor, answer_id):
+    cursor.execute("""
+                            SELECT question_id FROM answer WHERE id=%s
+            """, [answer_id])
+    requested_info = cursor.fetchall()
+    return requested_info
+
+
+@connection.connection_handler
+def get_comments_by_question_id(cursor, question_id):
+    cursor.execute("""
+                            SELECT * FROM comment WHERE question_id=%s
+            """, [question_id])
+    requested_info = cursor.fetchall()
+    return requested_info
+
+
+@connection.connection_handler
+def get_comment_by_id(cursor, comment_id):
+    cursor.execute("""
+                            SELECT * FROM comment WHERE id=%s
+            """, [comment_id])
+    requested_info = cursor.fetchall()
+    return requested_info
+
+
+@connection.connection_handler
+def update_comment(cursor, datas):
+    submission_time = datetime.now()
+    cursor.execute(""" UPDATE comment
+                        SET submission_time=%s, message=%s, edited_count=%s
+                        WHERE id=%s
+    """, (submission_time,  datas["message"], datas["edited_count"], datas['id']))

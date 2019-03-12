@@ -70,10 +70,24 @@
           {{ answer.view_number }}
         </div>
         <div class="col-md-auto">
-          <a href="{{ url_for('edit', type='answer', id=answer.id) }}">edit answer</a>
-          <td><a href="{{ url_for('delete',type='answer', id=answer.id)}}">del</a></td>
+          <a href="{{ url_for('edit', type='answer', id=answer.id) }}">edit answer | </a>
+          <a href="{{ url_for('add', type='comment', id=answer.id )}}">add comment |</a>
+          <a href="{{ url_for('delete',type='answer', id=answer.id)}}">del</a>
         </div>
       </div>
+      {% for comment in comment_data %}
+      {% if comment.answer_id == answer.id %}
+      <div class="row justify-content-md">
+        <div class="col-md-auto align-content-center">
+          {{comment.message}}
+        </div>
+        <div class="col-md-auto">
+          <a href="{{ url_for('edit', type='comment', id=comment.id) }}">edit | </a>
+          <a href="{{ url_for('delete', type='comment', id=comment.id) }}">del</a>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
         <hr>
     {% endfor %}
     {% endif %}

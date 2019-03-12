@@ -3,10 +3,10 @@
 {% block content %}
 
 
-<form action="{{url_for('add', type='comment', id='0')}}" method="post" name="add comment">
+<form action="{{url_for('add', type='comment', id=answer_id)}}" method="post" name="add-comment">
     <div class="form-group">
     <label for="comment">comment</label> <br>
-    <textarea class="form-control" name="comment" id="comment" required="True">TEST</textarea> <br>
+    <textarea class="form-control" name="comment" id="comment" required="True"></textarea> <br>
         <button type="submit" class="btn" name="add-comment" required="True">Submit</button>
     </div>
 </form>

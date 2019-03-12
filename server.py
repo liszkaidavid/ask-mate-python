@@ -35,29 +35,18 @@ def display_question(id):
 
 @app.route("/display/<type>/<id>")
 def display(type, id):
-    table_data = data_manager.get_data()
     if type == "question":
         exceptions = ['id', 'question_id']
         selected_data = data_manager.get_question(id)[0]
         answers = data_manager.get_answers_for_question(id)
+        comment_data = data_manager.get_comments_by_question_id(id)
         return render_template("display-question.html",
                                selected_data=selected_data,
                                passable_list=answers,
+                               comment_data=comment_data,
                                question_id=id,
                                exceptions=exceptions,
                                table_title=util.get_table_titles(type))
-    elif type == "answer":
-        selected_data = table_data[int(id)]
-        answers = data_manager.get_answers()
-        return render_template("display-answer.html",
-                               selected_data=selected_data,
-                               passable_list=answers)
-    elif type == "comment":
-        selected_data = table_data[int(id)]
-        answers = data_manager.get_answers()
-        return render_template("display-comment.html",
-                               selected_data=selected_data,
-                               passable_list=answers)
     return redirect('/')
 
 
@@ -72,7 +61,6 @@ def add(type, id):
                     'title': question_title,
                     'message': question,
                     'image': ''}
-            #submission_time//, view_number, vote_number, title, message, image
             data_manager.insert_into_question(datas)
             return redirect('/')
         return render_template('add-question.html')
@@ -89,18 +77,17 @@ def add(type, id):
             return redirect('/')
         return render_template('add-answer.html', selected_data=selected_data)
     elif type == "comment":
-        selected_data = data_manager.get_question(id)[0]
         if request.method == 'POST':
             comment = request.form.get('comment')
-            #question_id, answer_id, message, submission_time, edited_count
-            datas = {'question_id': 0,
+            question_id = data_manager.get_question_id_by_answer(id)[0]["question_id"]
+            datas = {'question_id': question_id,
                      'answer_id': id,
                      'message': comment,
                      'edited_count': 0
                      }
             data_manager.insert_into_comment(datas)
             return redirect('/')
-        return render_template('add-comment.html')
+        return render_template('add-comment.html', answer_id=id)
 
 
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
@@ -121,7 +108,6 @@ def edit(type, id):
             return redirect('/')
         return render_template('edit-question.html', updata=selected_data[0], id=id)
     elif type == "answer":
-        headers = data_manager.get_title_names('answer')
         selected_data = data_manager.get_answer(id)[0]
         if request.method == 'POST':
             answer = request.form.get('message')
@@ -129,23 +115,30 @@ def edit(type, id):
                      'question_id': selected_data['question_id'],
                      'message': answer,
                      'image': '',
-                     'id':id}
+                     'id': id}
             # submission_time//, vote_number, question_id, message, image
             data_manager.update_answer(datas)
             return redirect('/')
-        return render_template('edit-answer.html', updata=selected_data, answer_id=id, headers=headers)
+        return render_template('edit-answer.html', updata=selected_data, answer_id=id)
     elif type == "comment":
-        pass
-    return redirect('/')
+        selected_data = data_manager.get_comment_by_id(id)[0]
+        if request.method == "POST":
+            datas = {'message': request.form.get('message'),
+                     'id': id,
+                     'edited_count': selected_data['edited_count'] + 1}
+            data_manager.update_comment(datas)
+            return redirect('/')
+        return render_template("edit-comment.html", updata=selected_data, comment_id=id)
 
-@app.route("/delete/<type><id>")
+
+@app.route("/delete/<type>/<id>")
 def delete(type, id):
     if type == "question":
         data_manager.delete_question(id)
     elif type == "answer":
         data_manager.delete_answer(id)
     elif type == "comment":
-        pass
+        data_manager.delete_comment(id)
     return redirect("/list")
 
 
