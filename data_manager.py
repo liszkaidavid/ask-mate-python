@@ -173,7 +173,7 @@ def delete_comment(cursor, comment_id):
     """, [comment_id])
 
 
-##REGISTER##
+##USER_RELATED##
 
 @connection.connection_handler
 def register_user(cursor, datas):
@@ -190,3 +190,10 @@ def list_users(cursor):
     users = cursor.fetchall()
     return users
 
+@connection.connection_handler
+def get_user(cursor, user_name):
+    cursor.execute('''
+    SELECT id, password FROM user_list WHERE user_name=%s
+    ''', [user_name])
+    users = cursor.fetchone()
+    return users
