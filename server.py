@@ -168,9 +168,14 @@ def delete(type, id):
         data_manager.delete_comment(id)
     return redirect("/list")
 
-@app.route("/search")
+
+@app.route("/search", methods=["POST", "GET"])
 def search():
-    request.form.get
+    if request.method == 'POST':
+        requested_data = request.form.get('search_query')
+        print(requested_data)
+        print(data_manager.search(requested_data))
+        return render_template('display-answer.html', selected_data=requested_data)
 
 
 if __name__ == '__main__':

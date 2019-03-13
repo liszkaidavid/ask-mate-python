@@ -87,6 +87,12 @@ def get_title_names(cursor, table):
     requested_data = cursor.fetchall()
     return requested_data
 
+@connection.connection_handler
+def search(cursor, asked):
+    cursor.execute('''
+    SELECT * FROM answer WHERE message LIKE %s''', [asked])
+    datas = cursor.fetchall()
+    return datas
 
 ##INSERT##
 
