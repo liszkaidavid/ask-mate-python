@@ -34,7 +34,7 @@ def get_question(cursor, question_id):
     cursor.execute("""
                             SELECT * FROM question WHERE id=%s
             """, [question_id])
-    requested_info = cursor.fetchall()
+    requested_info = cursor.fetchone()
     return requested_info
 
 @connection.connection_handler
@@ -42,7 +42,7 @@ def get_answer(cursor, answer_id):
     cursor.execute("""
                             SELECT * FROM answer WHERE id=%s
             """, [answer_id])
-    requested_info = cursor.fetchall()
+    requested_info = cursor.fetchone()
     return requested_info
 
 @connection.connection_handler
@@ -59,7 +59,7 @@ def get_question_id_by_answer(cursor, answer_id):
     cursor.execute("""
                             SELECT question_id FROM answer WHERE id=%s
             """, [answer_id])
-    requested_info = cursor.fetchall()
+    requested_info = cursor.fetchone()
     return requested_info
 
 
@@ -77,7 +77,7 @@ def get_comment_by_id(cursor, comment_id):
     cursor.execute("""
                             SELECT * FROM comment WHERE id=%s
             """, [comment_id])
-    requested_info = cursor.fetchall()
+    requested_info = cursor.fetchone()
     return requested_info
 
 @connection.connection_handler

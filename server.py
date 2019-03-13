@@ -23,21 +23,11 @@ def list():
                            table_datas=table_data)
 
 
-@app.route("/display-question/<question_id>")
-def display_question(id):
-    table_data = data_manager.get_data()
-    selected_data = table_data[int(id)]
-    answers = data_manager.get_answers()
-    return render_template("display-question.html",
-                           selected_data=selected_data,
-                           passable_list=answers)
-
-
 @app.route("/display/<type>/<id>")
 def display(type, id):
     if type == "question":
         exceptions = ['id', 'question_id']
-        selected_data = data_manager.get_question(id)[0]
+        selected_data = data_manager.get_question(id)
         answers = data_manager.get_answers_for_question(id)
         comment_data = data_manager.get_comments_by_question_id(id)
         return render_template("display-question.html",
@@ -65,7 +55,7 @@ def add(type, id):
             return redirect('/')
         return render_template('add-question.html')
     elif type == "answer":
-        selected_data = data_manager.get_question(id)[0]
+        selected_data = data_manager.get_question(id)
         if request.method == 'POST':
             answer = request.form.get('message')
             datas = {'vote_number': 0,
@@ -79,7 +69,7 @@ def add(type, id):
     elif type == "comment":
         if request.method == 'POST':
             comment = request.form.get('comment')
-            question_id = data_manager.get_question_id_by_answer(id)[0]["question_id"]
+            question_id = data_manager.get_question_id_by_answer(id)["question_id"]
             datas = {'question_id': question_id,
                      'answer_id': id,
                      'message': comment,
@@ -102,7 +92,6 @@ def add(type, id):
         return render_template('add-user.html')
 
 
-
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
 def edit(type, id):
     if type == "question":
@@ -110,21 +99,21 @@ def edit(type, id):
         if request.method == 'POST':
             question_title = request.form.get('title')
             question = request.form.get('message')
-            datas = {'view_number': 0,
-                     'vote_number': 0,
+            datas = {'view_number': selected_data['view_number'],
+                     'vote_number': selected_data['vote_number'],
                      'title': question_title,
                      'message': question,
                      'image': '',
-                     'id':id}
+                     'id': id}
             # submission_time//, view_number, vote_number, title, message, image
             data_manager.update_question(datas)
             return redirect('/')
-        return render_template('edit-question.html', updata=selected_data[0], id=id)
+        return render_template('edit-question.html', updata=selected_data, id=id)
     elif type == "answer":
-        selected_data = data_manager.get_answer(id)[0]
+        selected_data = data_manager.get_answer(id)
         if request.method == 'POST':
             answer = request.form.get('message')
-            datas = {'vote_number': 0,
+            datas = {'vote_number': selected_data['vote_number'],
                      'question_id': selected_data['question_id'],
                      'message': answer,
                      'image': '',
@@ -134,7 +123,7 @@ def edit(type, id):
             return redirect('/')
         return render_template('edit-answer.html', updata=selected_data, answer_id=id)
     elif type == "comment":
-        selected_data = data_manager.get_comment_by_id(id)[0]
+        selected_data = data_manager.get_comment_by_id(id)
         if request.method == "POST":
             datas = {'message': request.form.get('message'),
                      'id': id,
