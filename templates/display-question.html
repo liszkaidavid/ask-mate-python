@@ -30,7 +30,7 @@
     <div class="col-md-auto">
       {{ owner.user_name }}
     </div>
-    {% if owner.user_name == session["user_name"] %}
+    {% if owner.user_name == session["user_name"] or session["user_rank"] == 0 %}
     <div class="col-md-auto">
       <a href="{{ url_for('edit', type='question', id=question_id) }}">edit question</a>
     </div>
@@ -83,7 +83,7 @@
           {% if session['is_valid'] == True %}
           <a href="{{ url_for('add', type='comment', id=answer.id )}}">add comment</a>
           {% endif %}
-          {% if answer.user_id == session["user_name"] %}
+          {% if answer.user_id == session["user_name"] or session["user_rank"] == 0 %}
           <a href="{{ url_for('edit', type='answer', id=answer.id) }}"> | edit answer | </a>
           <a href="{{ url_for('delete',type='answer', id=answer.id)}}">del</a>
           {% endif %}
@@ -98,7 +98,7 @@
         <div class="col-md-auto align-content-center">
           {{comment.user_id}}
         </div>
-        {% if comment.user_id == session["user_name"] %}
+        {% if comment.user_id == session["user_name"] or session["user_rank"] == 0 %}
         <div class="col-md-auto">
           <a href="{{ url_for('edit', type='comment', id=comment.id) }}">edit | </a>
           <a href="{{ url_for('delete', type='comment', id=comment.id) }}">del</a>

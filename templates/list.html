@@ -7,7 +7,9 @@
         {% for title in table_titles %}
             <th>{{ title.capitalize() }}</th>
         {% endfor %}
+    {% if session["user_rank"] == 0 %}
         <th></th>
+    {% endif %}
     </tr>
         {% for data in table_datas %}
     <tr>
@@ -18,7 +20,9 @@
             <td> {{ value }} </td>
             {% endif %}
         {% endfor %}
+        {% if session["user_rank"] == 0 %}
         <td><a href="{{ url_for('delete',type='question', id=data['id'])}}">del</a></td>
+        {% endif %}
     </tr>
         {% endfor %}
 </table>

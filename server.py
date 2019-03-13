@@ -29,6 +29,7 @@ def login():
         if user is not None:
             session['user_name'] = request.form['user_name']
             session['user_id'] = user['id']
+            session['user_rank'] = user['rank']
             is_valid_user = util.verify_password(request.form['password'], user['password'])
             print(is_valid_user)
             session['is_valid'] = is_valid_user
