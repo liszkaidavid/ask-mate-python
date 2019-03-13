@@ -74,7 +74,9 @@ def display(type, id):
                                table_title=util.get_table_titles(type),
                                owner=user_name)
     elif type == 'user':
-        return render_template('/')
+        user_data = data_manager.get_all_user_info(session['user_id'])
+        print(user_data)
+        return render_template('display-answer.html', selected_data=user_data, data=user_data)
     return redirect('/')
 
 

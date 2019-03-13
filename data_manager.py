@@ -224,3 +224,15 @@ def get_owner(cursor, id):
     ''', [id])
     owner = cursor.fetchone()
     return owner
+
+@connection.connection_handler
+def get_all_user_info(cursor, user_id):
+    cursor.execute('''
+    SELECT * INTO temporary
+    FROM user_list WhERE id=%s;
+    ALTER TABLE temporary DROP password;
+    SELECT * FROM temporary;
+    ''', [user_id])
+    data = cursor.fetchone()
+    cursor.execute('''DROP TABLE temporary;''')
+    return data
