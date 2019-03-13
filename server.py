@@ -58,13 +58,15 @@ def display(type, id):
         selected_data = data_manager.get_question(id)
         answers = data_manager.get_answers_for_question(id)
         comment_data = data_manager.get_comments_by_question_id(id)
+        user_name = data_manager.get_owner(selected_data["user_id"])
         return render_template("display-question.html",
                                selected_data=selected_data,
                                passable_list=answers,
                                comment_data=comment_data,
                                question_id=id,
                                exceptions=exceptions,
-                               table_title=util.get_table_titles(type))
+                               table_title=util.get_table_titles(type),
+                               owner=user_name)
     elif type == 'user':
         return render_template('/')
     return redirect('/')

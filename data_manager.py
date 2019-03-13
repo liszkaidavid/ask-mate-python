@@ -198,6 +198,7 @@ def list_users(cursor):
     users = cursor.fetchall()
     return users
 
+
 @connection.connection_handler
 def get_user(cursor, user_name):
     cursor.execute('''
@@ -205,3 +206,21 @@ def get_user(cursor, user_name):
     ''', [user_name])
     users = cursor.fetchone()
     return users
+
+
+@connection.connection_handler
+def get_users(cursor):
+    cursor.execute('''
+    SELECT id, user_name FROM user_list
+    ''')
+    users = cursor.fetchall()
+    return users
+
+
+@connection.connection_handler
+def get_owner(cursor, id):
+    cursor.execute('''
+    SELECT user_name FROM user_list WHERE id=%s
+    ''', [id])
+    owner = cursor.fetchone()
+    return owner
