@@ -102,24 +102,24 @@ def get_question_id_by_comment_id(cursor, comment_id):
 def insert_into_question(cursor, datas):
     submission_time = datetime.now()
     cursor.execute("""
-                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image) VALUES (%s, %s, %s, %s, %s, %s)
-    """, (submission_time, datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"]))
+                    INSERT INTO question (submission_time, view_number, vote_number, title, message, image, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (submission_time, datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"], datas["user_id"]))
 
 
 @connection.connection_handler
 def insert_into_comment(cursor, datas):
     submission_time = datetime.now()
     cursor.execute("""
-                    INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count) VALUES (%s, %s, %s, %s, %s)
-    """, (datas["question_id"], datas["answer_id"], datas["message"], submission_time, datas['edited_count']))
+                    INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count, user_id) VALUES (%s, %s, %s, %s, %s, %s)
+    """, (datas["question_id"], datas["answer_id"], datas["message"], submission_time, datas['edited_count'], datas['user_id']))
 
 
 @connection.connection_handler
 def insert_into_answer(cursor, datas):
     submission_time = datetime.now()
     cursor.execute("""
-                    INSERT INTO answer (submission_time, vote_number, question_id, message, image) VALUES (%s, %s, %s, %s, %s)
-    """, (submission_time, datas["vote_number"], datas["question_id"], datas["message"], datas["image"]))
+                    INSERT INTO answer (submission_time, vote_number, question_id, message, image, user_id) VALUES (%s, %s, %s, %s, %s, %s)
+    """, (submission_time, datas["vote_number"], datas["question_id"], datas["message"], datas["image"], datas['user_id']))
 
 
 ##UPDATE##
@@ -198,6 +198,7 @@ def list_users(cursor):
     users = cursor.fetchall()
     return users
 
+
 @connection.connection_handler
 def get_user(cursor, user_name):
     cursor.execute('''
@@ -205,3 +206,21 @@ def get_user(cursor, user_name):
     ''', [user_name])
     users = cursor.fetchone()
     return users
+
+
+@connection.connection_handler
+def get_users(cursor):
+    cursor.execute('''
+    SELECT id, user_name FROM user_list
+    ''')
+    users = cursor.fetchall()
+    return users
+
+
+@connection.connection_handler
+def get_owner(cursor, id):
+    cursor.execute('''
+    SELECT user_name FROM user_list WHERE id=%s
+    ''', [id])
+    owner = cursor.fetchone()
+    return owner
