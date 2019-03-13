@@ -75,8 +75,13 @@ def display(type, id):
                                owner=user_name)
     elif type == 'user':
         user_data = data_manager.get_all_user_info(session['user_id'])
+        users_data = data_manager.get_users_stuff(session['user_id'])
         print(user_data)
-        return render_template('display-answer.html', selected_data=user_data, data=user_data)
+        print(users_data)
+        selected_data = [user_data]
+        for row in users_data:
+            selected_data.append(dict(row))
+        return render_template('display-answer.html', selected_data=selected_data, data=user_data)
     return redirect('/')
 
 

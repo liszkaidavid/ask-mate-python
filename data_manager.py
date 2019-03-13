@@ -236,3 +236,11 @@ def get_all_user_info(cursor, user_id):
     data = cursor.fetchone()
     cursor.execute('''DROP TABLE temporary;''')
     return data
+
+@connection.connection_handler
+def get_users_stuff(cursor, user_id):
+    cursor.execute('''
+    SElECT * FROM question, answer, comment WHERE user_id = %s;
+    ''', [user_id])
+    data = cursor.fetchall()
+    return data
