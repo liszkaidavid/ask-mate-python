@@ -3,7 +3,7 @@ import data_manager
 import util
 
 app = Flask(__name__)
-
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/')
 def home_page():
@@ -20,12 +20,22 @@ def home_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        session['user_name'] = request.form['user_name']
-        session['password'] = request.form['password']
-        user = data_manager.get_user(session['user_name'])
-        is_valid_user = util.verify_password(session['password'], user['password'])
-        redirect('list.html', is_valid_user=is_valid_user, user=user)
-    return render_template('add-user.html')
+
+        user = data_manager.get_user(request.form.get('user_name'))
+        print(user)
+        if user is not None:
+            session['user_name'] = request.form['user_name']
+            session['user_id'] = user['id']
+            is_valid_user = util.verify_password(request.form['password'], user['password'])
+            print(is_valid_user)
+            session['is_valid'] = is_valid_user
+        return redirect('/list')
+    return render_template('add-user.html', login=True)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def logout():
+    pass
 
 
 @app.route("/list")
@@ -61,6 +71,8 @@ def display(type, id):
                                question_id=id,
                                exceptions=exceptions,
                                table_title=util.get_table_titles(type))
+    elif type == 'user':
+        return render_template('/')
     return redirect('/')
 
 
@@ -113,7 +125,7 @@ def add(type, id):
             }
             data_manager.register_user(datas)
             return redirect('/')
-        return render_template('add-user.html')
+        return render_template('add-user.html', login=False)
 
 
 

@@ -194,6 +194,6 @@ def list_users(cursor):
 def get_user(cursor, user_name):
     cursor.execute('''
     SELECT id, password FROM user_list WHERE user_name=%s
-    '''[user_name])
+    ''', [user_name])
     users = cursor.fetchone()
     return users
