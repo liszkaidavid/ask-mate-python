@@ -120,27 +120,27 @@ def insert_into_answer(cursor, datas):
 def update_comment(cursor, datas):
     submission_time = datetime.now()
     cursor.execute(""" UPDATE comment
-                        SET submission_time=%s, message=%s, edited_count=%s, user_id=%s
+                        SET submission_time=%s, message=%s, edited_count=%s
                         WHERE id=%s
-    """, (submission_time,  datas["message"], datas["edited_count"], datas['id'], datas['user_id']))
+    """, (submission_time,  datas["message"], datas["edited_count"], datas['id']))
 
 
 @connection.connection_handler
 def update_question(cursor, datas):
     submission_time = datetime.now()
     cursor.execute(""" UPDATE question
-                        SET submission_time=%s, view_number=%s, vote_number=%s, title=%s, message=%s, image=%s, user_id=%s
+                        SET submission_time=%s, view_number=%s, vote_number=%s, title=%s, message=%s, image=%s
                         WHERE id=%s
-    """, (submission_time, datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"], datas["id"], datas['user_id'] ))
+    """, (submission_time, datas["view_number"], datas["vote_number"], datas["title"], datas["message"], datas["image"], datas["id"] ))
 
 
 @connection.connection_handler
 def update_answer(cursor, datas):
     submission_time = datetime.now()
     cursor.execute(""" UPDATE answer
-                        SET submission_time=%s, vote_number=%s, question_id=%s, message=%s, image=%s, user_id=%s
+                        SET submission_time=%s, vote_number=%s, question_id=%s, message=%s, image=%s
                         WHERE id=%s
-    """, (submission_time, datas["vote_number"], datas["question_id"], datas["message"], datas["image"], datas['id'], datas['user_id']))
+    """, (submission_time, datas["vote_number"], datas["question_id"], datas["message"], datas["image"], datas['id']))
 
 
 ##DELETE##

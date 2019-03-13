@@ -19,11 +19,11 @@ def login():
     if request.method == 'POST':
 
         user = data_manager.get_user(request.form.get('user_name'))
-        print(user)
         if user is not None:
             session['user_name'] = request.form['user_name']
             session['user_id'] = user['id']
             is_valid_user = util.verify_password(request.form['password'], user['password'])
+            print(type(session['user_id']))
             print(is_valid_user)
             session['is_valid'] = is_valid_user
         return redirect('/list')
