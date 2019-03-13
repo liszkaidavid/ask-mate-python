@@ -133,7 +133,6 @@ def add(type, id):
             return redirect('/')
         return render_template('add-user.html', login=False)
 
-
 @app.route("/edit/<type>/<id>", methods=["POST", "GET"])
 def edit(type, id):
     if type == "question":
