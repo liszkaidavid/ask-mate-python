@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, session, escape
 import data_manager
 import util
 
@@ -7,11 +7,25 @@ app = Flask(__name__)
 
 @app.route('/')
 def home_page():
+    if 'username' in session:
+        print('Logged in as %s' %escape(session['username']))
+    print('You are not logged in')
     table_titles = util.get_table_titles('question')
     datas = data_manager.get_limited_questions()
     return render_template("list.html",
                            table_titles=table_titles,
                            table_datas=datas)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['user_name'] = request.form['user_name']
+        session['password'] = request.form['password']
+        user = data_manager.get_user(session['user_name'])
+        is_valid_user = util.verify_password(session['password'], user['password'])
+        redirect('list.html', is_valid_user=is_valid_user, user=user)
+    return render_template('add-user.html')
 
 
 @app.route("/list")
