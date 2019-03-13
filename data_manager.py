@@ -94,6 +94,14 @@ def search(cursor, asked):
     datas = cursor.fetchall()
     return datas
 
+@connection.connection_handler
+def get_question_id_by_comment_id(cursor, comment_id):
+    cursor.execute("""
+                                SELECT question_id FROM comment WHERE id=%s
+                """, [comment_id])
+    requested_info = cursor.fetchone()
+    return requested_info
+
 ##INSERT##
 
 @connection.connection_handler

@@ -5,6 +5,13 @@ import util
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+
+def last_page(question_id):
+    last_url = "/display/question/"
+    last_url += str(question_id)
+    return redirect(last_url)
+
+
 @app.route('/')
 def home_page():
     table_titles = util.get_table_titles('question')
@@ -17,7 +24,6 @@ def home_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-
         user = data_manager.get_user(request.form.get('user_name'))
         if user is not None:
             session['user_name'] = request.form['user_name']
@@ -77,7 +83,7 @@ def add(type, id):
                     'image': '',
                      'user_id':session['user_id']}
             data_manager.insert_into_question(datas)
-            return redirect('/')
+            return redirect("/")
         return render_template('add-question.html')
     elif type == "answer":
         selected_data = data_manager.get_question(id)
@@ -89,7 +95,7 @@ def add(type, id):
                      'image': '',
                      'user_id':session['user_id']}
             data_manager.insert_into_answer(datas)
-            return redirect('/')
+            return last_page(id)
         return render_template('add-answer.html', selected_data=selected_data)
     elif type == "comment":
         if request.method == 'POST':
@@ -101,7 +107,7 @@ def add(type, id):
                      'edited_count': 0,
                      'user_id': session['user_id']}
             data_manager.insert_into_comment(datas)
-            return redirect('/')
+            return last_page(question_id)
         return render_template('add-comment.html', answer_id=id)
     elif type == "user":
         if request.method == 'POST':
@@ -132,7 +138,7 @@ def edit(type, id):
                      'id': id}
             # submission_time//, view_number, vote_number, title, message, image
             data_manager.update_question(datas)
-            return redirect('/')
+            return last_page(id)
         return render_template('edit-question.html', updata=selected_data, id=id)
     elif type == "answer":
         selected_data = data_manager.get_answer(id)
@@ -145,16 +151,17 @@ def edit(type, id):
                      'id': id}
             # submission_time//, vote_number, question_id, message, image
             data_manager.update_answer(datas)
-            return redirect('/')
+            return last_page(selected_data['question_id'])
         return render_template('edit-answer.html', updata=selected_data, answer_id=id)
     elif type == "comment":
         selected_data = data_manager.get_comment_by_id(id)
+        qid = data_manager.get_question_id_by_comment_id(id)["question_id"]
         if request.method == "POST":
             datas = {'message': request.form.get('message'),
                      'id': id,
                      'edited_count': selected_data['edited_count'] + 1}
             data_manager.update_comment(datas)
-            return redirect('/')
+            return last_page(qid)
         return render_template("edit-comment.html", updata=selected_data, comment_id=id)
 
 
@@ -162,11 +169,14 @@ def edit(type, id):
 def delete(type, id):
     if type == "question":
         data_manager.delete_question(id)
+        return redirect("/")
     elif type == "answer":
+        qid = data_manager.get_question_id_by_answer(id)["question_id"]
         data_manager.delete_answer(id)
     elif type == "comment":
+        qid = data_manager.get_question_id_by_comment_id(id)["question_id"]
         data_manager.delete_comment(id)
-    return redirect("/list")
+    return last_page(qid)
 
 
 @app.route("/search", methods=["POST", "GET"])
