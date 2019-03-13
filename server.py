@@ -129,7 +129,8 @@ def edit(type, id):
                      'title': question_title,
                      'message': question,
                      'image': '',
-                     'id': id}
+                     'id': id,
+                     'user_id': session['user_id']}
             # submission_time//, view_number, vote_number, title, message, image
             data_manager.update_question(datas)
             return redirect('/')
@@ -142,7 +143,8 @@ def edit(type, id):
                      'question_id': selected_data['question_id'],
                      'message': answer,
                      'image': '',
-                     'id': id}
+                     'id': id,
+                     'user_id':session['user_id']}
             # submission_time//, vote_number, question_id, message, image
             data_manager.update_answer(datas)
             return redirect('/')
@@ -152,7 +154,8 @@ def edit(type, id):
         if request.method == "POST":
             datas = {'message': request.form.get('message'),
                      'id': id,
-                     'edited_count': selected_data['edited_count'] + 1}
+                     'edited_count': selected_data['edited_count'] + 1,
+                     'user_id':session['user_id']}
             data_manager.update_comment(datas)
             return redirect('/')
         return render_template("edit-comment.html", updata=selected_data, comment_id=id)
