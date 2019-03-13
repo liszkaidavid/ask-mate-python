@@ -57,7 +57,11 @@ def display(type, id):
         exceptions = ['id', 'question_id']
         selected_data = data_manager.get_question(id)
         answers = data_manager.get_answers_for_question(id)
+        for i, answer in enumerate(answers):
+            answers[i]["user_id"] = data_manager.get_owner(selected_data["user_id"])["user_name"]
         comment_data = data_manager.get_comments_by_question_id(id)
+        for i, comment in enumerate(comment_data):
+            comment_data[i]["user_id"] = data_manager.get_owner(selected_data["user_id"])["user_name"]
         user_name = data_manager.get_owner(selected_data["user_id"])
         return render_template("display-question.html",
                                selected_data=selected_data,
@@ -78,11 +82,13 @@ def add(type, id):
         if request.method == 'POST':
             question_title = request.form.get('title')
             question = request.form.get('message')
+            print(session['user_id'])
             datas = {'view_number': 0,
                     'vote_number': 0,
                     'title': question_title,
                     'message': question,
-                    'image': ''}
+                    'image': '',
+                    'user_id': session['user_id']}
             data_manager.insert_into_question(datas)
             return redirect("/")
         return render_template('add-question.html')
@@ -93,7 +99,8 @@ def add(type, id):
             datas = {'vote_number': 0,
                      'question_id': id,
                      'message': answer,
-                     'image': ''}
+                     'image': '',
+                     'user_id': session["user_id"]}
             # submission_time//, vote_number, question_id, message, image
             data_manager.insert_into_answer(datas)
             return last_page(id)
@@ -105,7 +112,8 @@ def add(type, id):
             datas = {'question_id': question_id,
                      'answer_id': id,
                      'message': comment,
-                     'edited_count': 0
+                     'edited_count': 0,
+                     'user_id': session['user_id']
                      }
             data_manager.insert_into_comment(datas)
             return last_page(question_id)

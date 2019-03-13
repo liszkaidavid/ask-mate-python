@@ -30,9 +30,11 @@
     <div class="col-md-auto">
       {{ owner.user_name }}
     </div>
+    {% if owner.user_name == session["user_name"] %}
     <div class="col-md-auto">
       <a href="{{ url_for('edit', type='question', id=question_id) }}">edit question</a>
     </div>
+    {% endif %}
   </div>
 
     <h4 style="padding-top: 25px;">Answers</h4>
@@ -73,9 +75,14 @@
           {{ answer.view_number }}
         </div>
         <div class="col-md-auto">
-          <a href="{{ url_for('edit', type='answer', id=answer.id) }}">edit answer | </a>
-          <a href="{{ url_for('add', type='comment', id=answer.id )}}">add comment |</a>
+          {{ answer.user_id }}
+        </div>
+        <div class="col-md-auto">
+          <a href="{{ url_for('add', type='comment', id=answer.id )}}">add comment</a>
+          {% if answer.user_id == session["user_name"] %}
+          <a href="{{ url_for('edit', type='answer', id=answer.id) }}"> | edit answer | </a>
           <a href="{{ url_for('delete',type='answer', id=answer.id)}}">del</a>
+          {% endif %}
         </div>
       </div>
       {% for comment in comment_data %}
@@ -84,10 +91,15 @@
         <div class="col-md-auto align-content-center">
           {{comment.message}}
         </div>
+        <div class="col-md-auto align-content-center">
+          {{comment.user_id}}
+        </div>
+        {% if comment.user_id == session["user_name"] %}
         <div class="col-md-auto">
           <a href="{{ url_for('edit', type='comment', id=comment.id) }}">edit | </a>
           <a href="{{ url_for('delete', type='comment', id=comment.id) }}">del</a>
         </div>
+        {% endif %}
       </div>
       {% endif %}
       {% endfor %}

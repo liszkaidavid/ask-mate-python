@@ -6,22 +6,31 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('list') }}">list</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('add', type='question', id='0') }}">Add question</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-right" >
             {% if session['is_valid'] == True %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('list') }}">list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('add', type='question', id='0') }}">Add question</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-right" >
             <li>
                 <a class="nav-link" href="{{ url_for('logout')}}">logout</a>
             </li><li>
                 <a class="nav-link" href="{{ url_for('display', type='user', id=session['id'])}}">{{session['user_name']}}</a>
             </li>
             {% else %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('list') }}">list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="{{ url_for('add', type='question', id='0') }}">Add question</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-right" >
             <li>
                 <a class="nav-link" href="{{ url_for('add', type='user', id='0') }}">Register</a>
             </li>
