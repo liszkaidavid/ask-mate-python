@@ -74,7 +74,8 @@ def add(type, id):
                     'vote_number': 0,
                     'title': question_title,
                     'message': question,
-                    'image': ''}
+                    'image': '',
+                     'user_id':session['user_id']}
             data_manager.insert_into_question(datas)
             return redirect('/')
         return render_template('add-question.html')
@@ -85,8 +86,8 @@ def add(type, id):
             datas = {'vote_number': 0,
                      'question_id': id,
                      'message': answer,
-                     'image': ''}
-            # submission_time//, vote_number, question_id, message, image
+                     'image': '',
+                     'user_id':session['user_id']}
             data_manager.insert_into_answer(datas)
             return redirect('/')
         return render_template('add-answer.html', selected_data=selected_data)
@@ -97,8 +98,8 @@ def add(type, id):
             datas = {'question_id': question_id,
                      'answer_id': id,
                      'message': comment,
-                     'edited_count': 0
-                     }
+                     'edited_count': 0,
+                     'user_id': session['user_id']}
             data_manager.insert_into_comment(datas)
             return redirect('/')
         return render_template('add-comment.html', answer_id=id)
