@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, escape
+from flask import Flask, render_template, request, redirect, session
 import data_manager
 import util
 
@@ -129,8 +129,7 @@ def edit(type, id):
                      'title': question_title,
                      'message': question,
                      'image': '',
-                     'id': id,
-                     'user_id': session['user_id']}
+                     'id': id}
             # submission_time//, view_number, vote_number, title, message, image
             data_manager.update_question(datas)
             return redirect('/')
@@ -143,8 +142,7 @@ def edit(type, id):
                      'question_id': selected_data['question_id'],
                      'message': answer,
                      'image': '',
-                     'id': id,
-                     'user_id':session['user_id']}
+                     'id': id}
             # submission_time//, vote_number, question_id, message, image
             data_manager.update_answer(datas)
             return redirect('/')
@@ -154,8 +152,7 @@ def edit(type, id):
         if request.method == "POST":
             datas = {'message': request.form.get('message'),
                      'id': id,
-                     'edited_count': selected_data['edited_count'] + 1,
-                     'user_id':session['user_id']}
+                     'edited_count': selected_data['edited_count'] + 1}
             data_manager.update_comment(datas)
             return redirect('/')
         return render_template("edit-comment.html", updata=selected_data, comment_id=id)
@@ -170,6 +167,10 @@ def delete(type, id):
     elif type == "comment":
         data_manager.delete_comment(id)
     return redirect("/list")
+
+@app.route("/search")
+def search():
+    request.form.get
 
 
 if __name__ == '__main__':
