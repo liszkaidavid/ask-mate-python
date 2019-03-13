@@ -5,6 +5,19 @@ import util
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+
+def last_page(type, id):
+    last_url = "/display/question/"
+    if type == "question":
+        pass
+    elif type == "answer":
+        last_url += str(id)
+        pass
+    elif type == "comment":
+        last_url += str(data_manager.get_question_id_by_comment_id(id)["question_id"])
+    return redirect(last_url)
+
+
 @app.route('/')
 def home_page():
     table_titles = util.get_table_titles('question')
@@ -17,7 +30,6 @@ def home_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-
         user = data_manager.get_user(request.form.get('user_name'))
         print(user)
         if user is not None:
@@ -76,7 +88,7 @@ def add(type, id):
                     'message': question,
                     'image': ''}
             data_manager.insert_into_question(datas)
-            return redirect('/')
+            return redirect("/")
         return render_template('add-question.html')
     elif type == "answer":
         selected_data = data_manager.get_question(id)
@@ -88,7 +100,7 @@ def add(type, id):
                      'image': ''}
             # submission_time//, vote_number, question_id, message, image
             data_manager.insert_into_answer(datas)
-            return redirect('/')
+            return last_page(type, id)
         return render_template('add-answer.html', selected_data=selected_data)
     elif type == "comment":
         if request.method == 'POST':
@@ -100,7 +112,7 @@ def add(type, id):
                      'edited_count': 0
                      }
             data_manager.insert_into_comment(datas)
-            return redirect('/')
+            return last_page(type, id)
         return render_template('add-comment.html', answer_id=id)
     elif type == "user":
         if request.method == 'POST':
