@@ -78,7 +78,9 @@
           {{ answer.user_id }}
         </div>
         <div class="col-md-auto">
+          {% if session['is_valid'] == True %}
           <a href="{{ url_for('add', type='comment', id=answer.id )}}">add comment</a>
+          {% endif %}
           {% if answer.user_id == session["user_name"] %}
           <a href="{{ url_for('edit', type='answer', id=answer.id) }}"> | edit answer | </a>
           <a href="{{ url_for('delete',type='answer', id=answer.id)}}">del</a>

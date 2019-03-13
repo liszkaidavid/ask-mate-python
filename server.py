@@ -57,11 +57,13 @@ def display(type, id):
         exceptions = ['id', 'question_id']
         selected_data = data_manager.get_question(id)
         answers = data_manager.get_answers_for_question(id)
-        for i, answer in enumerate(answers):
-            answers[i]["user_id"] = data_manager.get_owner(answer["user_id"])["user_name"]
         comment_data = data_manager.get_comments_by_question_id(id)
-        for i, comment in enumerate(comment_data):
-            comment_data[i]["user_id"] = data_manager.get_owner(comment["user_id"])["user_name"]
+        if not not answers:
+            for i, answer in enumerate(answers):
+                answers[i]["user_id"] = data_manager.get_owner(answer["user_id"])["user_name"]
+            for i, comment in enumerate(comment_data):
+                print(comment)
+                comment_data[i]["user_id"] = data_manager.get_owner(comment["user_id"])["user_name"]
         user_name = data_manager.get_owner(selected_data["user_id"])
         return render_template("display-question.html",
                                selected_data=selected_data,
