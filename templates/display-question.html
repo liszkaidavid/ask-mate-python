@@ -39,7 +39,9 @@
 
     <h4 style="padding-top: 25px;">Answers</h4>
     <hr>
+    {% if session['is_valid'] == True %}
     <a href="{{ url_for('add', type='answer', id=question_id) }}">add answer</a>
+    {% endif %}
     {% if not passable_list %}
         <h3>No answers given yet</h3>
     {% else %}
