@@ -13,6 +13,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('add', type='question', id='0') }}">Add question</a>
             </li>
+        </ul>
+        <ul class="nav navbar-right" >
             {% if session['is_valid'] == True %}
             <li>
                 <a class="nav-link" href="{{ url_for('logout')}}">logout</a>

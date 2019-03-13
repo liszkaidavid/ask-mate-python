@@ -7,9 +7,6 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/')
 def home_page():
-    if 'username' in session:
-        print('Logged in as %s' %escape(session['username']))
-    print('You are not logged in')
     table_titles = util.get_table_titles('question')
     datas = data_manager.get_limited_questions()
     return render_template("list.html",
@@ -33,9 +30,10 @@ def login():
     return render_template('add-user.html', login=True)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/logout')
 def logout():
-    pass
+    session.clear()
+    return redirect('/')
 
 
 @app.route("/list")
