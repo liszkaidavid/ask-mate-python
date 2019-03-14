@@ -51,6 +51,14 @@ def list():
                            table_titles=table_titles,
                            table_datas=table_data)
 
+@app.route('/list_users')
+def list_users():
+    table_titles = util.get_table_titles('user_list')
+    table_titles.pop(3)
+    print(table_titles)
+    table_data = data_manager.get_users()
+    return render_template("list.html", table_titles=table_titles, table_datas=table_data)
+
 
 @app.route("/display/<type>/<id>")
 def display(type, id):
