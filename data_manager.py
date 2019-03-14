@@ -211,7 +211,7 @@ def get_user(cursor, user_name):
 @connection.connection_handler
 def get_users(cursor):
     cursor.execute('''
-    SELECT id, user_name FROM user_list
+    SELECT id, user_name, registration_time, rank FROM user_list
     ''')
     users = cursor.fetchall()
     return users
