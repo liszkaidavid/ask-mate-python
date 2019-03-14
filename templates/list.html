@@ -7,7 +7,7 @@
         {% for title in table_titles %}
             <th>{{ title.capitalize() }}</th>
         {% endfor %}
-    {% if session["user_rank"] == 0 %}
+    {% if session["user_rank"] == 0  %}
         <th></th>
     {% endif %}
     </tr>

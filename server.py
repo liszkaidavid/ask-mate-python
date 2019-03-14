@@ -25,13 +25,11 @@ def home_page():
 def login():
     if request.method == 'POST':
         user = data_manager.get_user(request.form.get('user_name'))
-        print(user)
         if user is not None:
             session['user_name'] = request.form['user_name']
             session['user_id'] = user['id']
             session['user_rank'] = user['rank']
             is_valid_user = util.verify_password(request.form['password'], user['password'])
-            print(is_valid_user)
             session['is_valid'] = is_valid_user
         return redirect('/list')
     return render_template('add-user.html', login=True)
@@ -55,7 +53,6 @@ def list():
 def list_users():
     table_titles = util.get_table_titles('user_list')
     table_titles.pop(3)
-    print(table_titles)
     table_data = data_manager.get_users()
     return render_template("list.html", table_titles=table_titles, table_datas=table_data)
 
@@ -71,7 +68,6 @@ def display(type, id):
             for i, answer in enumerate(answers):
                 answers[i]["user_id"] = data_manager.get_owner(answer["user_id"])["user_name"]
             for i, comment in enumerate(comment_data):
-                print(comment)
                 comment_data[i]["user_id"] = data_manager.get_owner(comment["user_id"])["user_name"]
         user_name = data_manager.get_owner(selected_data["user_id"])
         return render_template("display-question.html",
@@ -93,7 +89,6 @@ def add(type, id):
         if request.method == 'POST':
             question_title = request.form.get('title')
             question = request.form.get('message')
-            print(session['user_id'])
             datas = {'view_number': 0,
                     'vote_number': 0,
                     'title': question_title,
